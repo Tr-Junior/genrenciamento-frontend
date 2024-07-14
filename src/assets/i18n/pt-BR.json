@@ -1,0 +1,239 @@
+{
+
+  "pt":{
+
+     "startsWith": "Começa com",
+
+     "contains": "Contém",
+
+     "notContains": "Não contém",
+
+     "endsWith": "Termina com",
+
+     "equals": "Igual",
+
+     "notEquals": "Não é igual",
+
+     "noFilter": "Sem filtro",
+
+     "filter": "Filtro",
+
+     "lt": "Menos de",
+
+     "lte": "Menor ou igual a",
+
+     "gt": "Maior que",
+
+     "gte": "Maior ou igual a",
+
+     "dateIs": "A data é",
+
+     "dateIsNot": "Data não é",
+
+     "dateBefore": "A data é anterior",
+
+     "dateAfter": "Data é depois",
+
+     "personalizado": "Personalizado",
+
+     "claro": "Limpar",
+
+     "aplicar": "Aplicar",
+
+     "matchAll": "Match All",
+
+     "matchAny": "corresponder a qualquer",
+
+     "addRule": "Adicionar Regra",
+
+     "removeRule": "Remover Regra",
+
+     "accept": "Sim" ,
+
+     "reject": "Não",
+
+     "escolher": "Escolher",
+
+     "carregar": "Carregar",
+
+     "cancelar": "Cancelar",
+
+     "concluído": "Concluído",
+
+     "pendente": "Pendente",
+
+     "dayNames": ["Domingo", "Segunda-feira" ,"Terça-feira","Quarta-feira","Quinta-feira", "Sexta-feira", "Sábado"],
+
+     "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+
+     "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+
+     "monthNames": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+
+     "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+
+     "chooseYear": "Escolher Ano",
+
+     "chooseMonth": "Escolher mês",
+
+     "chooseDate": "Escolher data",
+
+     "prevDecade": "Década anterior",
+
+     "nextDecade": "Década seguinte",
+
+     "prevYear": "PAno anterior",
+
+     "nextYear": "Ano seguinte" ,
+
+     "prevMonth": "Mês Anterior",
+
+     "nextMonth": "Mês seguinte",
+
+     "prevHour": "Hora Anterior",
+
+     "nextHour": "Próxima Hora",
+
+     "prevMinute": "Minuto anterior",
+
+     "nextMinute": "Próximo Minuto",
+
+     "prevSecond": "Segundo anterior",
+
+     "nextSecond": "Próximo segundo",
+
+     "am": "am",
+
+     "pm": "pm",
+
+     "hoje": "Hoje",
+
+     "weekHeader": "Wk",
+
+     "firstDayOfWeek": 0,
+
+     "dateFormat": "mm/dd/yy",
+
+     "weak": "Fraco",
+
+     "medium": "Médio",
+
+     "forte": "Forte",
+
+     "passwordPrompt": "Introduzir uma palavra-passe",
+
+     "emptyFilterMessage": "Nenhum resultado encontrado",
+
+     "searchMessage": "{0} resultados disponíveis",
+
+     "selectionMessage": "{0} itens seleccionados",
+
+     "emptySelectionMessage": "Nenhum item seleccionado",
+
+     "emptySearchMessage": "Nenhum resultado encontrado",
+
+     "emptyMessage": "Não existem opções disponíveis",
+
+     "aria": {
+
+        "trueLabel": "True",
+
+        "falseLabel": "Falso",
+
+        "nullLabel": "Não seleccionado",
+
+        "estrela": "1 estrela",
+
+        "estrelas": "{estrela} estrelas",
+
+        "selectAll": "Todos os itens seleccionados",
+
+        "unselectAll": "Todos os itens não seleccionados",
+
+        "fechar": "Fechar",
+
+        "anterior": "Anterior",
+
+        "seguinte": "Seguinte",
+
+        "navegação": "Navegação",
+
+        "scrollTop": "Scroll Top",
+
+        "moveTop": "Move Top",
+
+        "moveUp": "Mover para cima",
+
+        "moveDown": "Mover para baixo",
+
+        "moveBottom": "Move Bottom",
+
+        "moveToTarget": "Mover para o alvo",
+
+        "moveToSource": "Mover para a origem",
+
+        "moveAllToTarget": "Mover tudo para o destino",
+
+        "moveAllToSource": "Mover tudo para a origem",
+
+        "pageLabel": "{page}",
+
+        "firstPageLabel": "Primeira página",
+
+        "lastPageLabel": "Última página",
+
+        "nextPageLabel": "Página seguinte",
+
+        "previousPageLabel": "Página anterior",
+
+        "rowsPerPageLabel": "Linhas por página",
+
+        "jumpToPageDropdownLabel": "Saltar para página suspensa",
+
+        "jumpToPageInputLabel": "Saltar para a entrada de página",
+
+        "selectRow": "Linha seleccionada",
+
+        "unselectRow": "Linha não seleccionada",
+
+        "expandRow": "Linha expandida",
+
+        "collapseRow": "Linha recolhida",
+
+        "showFilterMenu": "Mostrar menu de filtro",
+
+        "hideFilterMenu": "Ocultar menu de filtro",
+
+        "filterOperator": "Operador de filtro",
+
+        "filterConstraint": "Restrição de filtro",
+
+        "editRow": "Edição de linha",
+
+        "saveEdit": "Guardar edição",
+
+        "cancelEdit": "Cancelar edição",
+
+        "listView": "Vista de lista",
+
+        "gridView": "Vista de grelha",
+
+        "slide": "Diapositivo",
+
+        "slideNumber": "{slideNumber}",
+
+        "zoomImage": "Zoom da imagem",
+
+        "zoomIn": "Ampliar",
+
+        "zoomOut": "Zoom Out",
+
+        "rotateRight": "Rodar para a direita",
+
+        "rotateLeft": "Rodar para a esquerda"
+
+     }
+
+  }
+
+}

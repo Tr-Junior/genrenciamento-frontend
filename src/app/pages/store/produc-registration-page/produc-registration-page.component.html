@@ -1,0 +1,30 @@
+<app-loading style="text-align: center" *ngIf="busy"></app-loading>
+<div [formGroup]="form" class="card form-container py-4 mt-3">
+  <div class="form-item">
+    <span class="font-bold block mb-2">Nome do Produto</span>
+    <input class="w-full" pInputText id="product" formControlName="title" [ngClass]="{'uk-form-danger': (!form.controls['title'].valid && !form.controls['title'].pristine) }" />
+  </div>
+  <div class="form-item">
+    <span class="font-bold block mb-2">Quantidade</span>
+    <p-inputNumber [size]="11" formControlName="quantity" id="productQuantity" inputId="integeronly" [ngClass]="{'uk-form-danger': (!form.controls['quantity'].valid && !form.controls['quantity'].pristine) }"></p-inputNumber>
+  </div>
+  <div class="form-item">
+    <span class="font-bold block mb-2">Quantidade mínima</span>
+    <p-inputNumber [size]="11" formControlName="min_quantity" id="productMinQuantity" inputId="integeronly" [ngClass]="{'uk-form-danger': (!form.controls['min_quantity'].valid && !form.controls['min_quantity'].pristine) }"></p-inputNumber>
+  </div>
+  <div class="form-item">
+    <span class="font-bold block mb-2">Valor de compra</span>
+    <p-inputNumber [size]="11" formControlName="purchasePrice" inputId="currency-us" mode="currency" currency="BRL" locale="pt" id="productPurchasePrice" [ngClass]="{'uk-form-danger': (!form.controls['purchasePrice'].valid && !form.controls['purchasePrice'].pristine) }"></p-inputNumber>
+  </div>
+  <div class="form-item">
+    <span class="font-bold block mb-2">Valor de venda</span>
+    <p-inputNumber [size]="11" formControlName="price" inputId="currency-us" mode="currency" currency="BRL" locale="pt" id="productPrice" [ngClass]="{'uk-form-danger': (!form.controls['price'].valid && !form.controls['price'].pristine) }"></p-inputNumber>
+  </div>
+  <div class="form-actions">
+    <span class="font-bold block mb-2">Ação</span>
+    <div class="actions-container">
+      <p-button class="" icon="pi pi-check" label="Salvar" (click)="submit()" *ngIf="!busy"></p-button>
+      <p-button class="p-button-danger" label="Cancelar" icon="pi pi-times" (click)="resetForm();" styleClass="p-button-danger"></p-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+.list-item:nth-child(even) {
+  background-color: #c04b4b; /* Define a cor da célula para valores pares */
+}
+
+.list-item:nth-child(odd) {
+  background-color: #d1fae5; /* Define a cor da célula para valores ímpares */
+}
+.payment-cash {
+  background-color: #4caf50; /* Verde */
+}
+
+.payment-credit {
+  background-color: #2196f3; /* Azul */
+}
+
+.payment-debit {
+  background-color: #ffc107; /* Amarelo */
+}
+.payment-pix {
+  background-color: #ff8b07; /* Amarelo */
+}
+.payment-others {
+  background-color: #0dbe24; /* Cinza */
+}
+.total {
+  background-color: #ff0000;
+  color: #a33c3c;
+}
+.th {
+  text-align: center;
+}

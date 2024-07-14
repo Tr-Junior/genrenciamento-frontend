@@ -1,0 +1,93 @@
+<app-loading style="text-align: center" *ngIf="busy"></app-loading>
+<div [formGroup]="form" class="card form-container py-4 mt-3">
+<div class="form-item">
+  <span class="font-bold block mb-2">Nome do Produto</span>
+  <input class="w-full" pInputText id="product" formControlName="title" [ngClass]="{'uk-form-danger': (!form.controls['title'].valid && !form.controls['title'].pristine) }" />
+</div>
+<div class="form-item">
+  <span class="font-bold block mb-2">Status</span>
+  <p-dropdown [options]="status" formControlName="status" id="status" inputId="statusDropdown" [ngClass]="{'uk-form-danger': (!form.controls['status'].valid && !form.controls['status'].pristine) }"></p-dropdown>
+</div>
+<div class="form-actions">
+  <span class="font-bold block mb-2">Ação</span>
+  <div class="actions-container">
+    <p-button class="" icon="pi pi-check" label="Salvar" (click)="submit()" *ngIf="!busy"></p-button>
+    <p-button class="p-button-danger" label="Cancelar" icon="pi pi-times" (click)="resetForm();" styleClass="p-button-danger"></p-button>
+  </div>
+</div>
+</div>
+
+
+<div class="card">
+  <p-table [value]="productsBuy" dataKey="id" class="responsive-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="title" style="width:25%">
+          Produto <p-sortIcon field="title" />
+        </th>
+        <th pSortableColumn="status" style="width:10%">
+          Status <p-sortIcon field="status" />
+        </th>
+        <th pSortableColumn="acao" style="width:5%">
+          Ação<p-sortIcon field="acao" />
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter type="text" field="title" [matchMode]="'contains'" [showClearButton]="true" />
+        </th>
+        <th>
+          <p-columnFilter type="text" field="status" [matchMode]="'contains'" [showClearButton]="false" />
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-editing="editing">
+      <tr>
+        <td [pEditableColumn]="true" pEditableColumnField="title">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.title" (keydown.enter)="onEdit($event, product)" required />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.title }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="true" pEditableColumnField="status">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <div>
+                <p-dropdown [options]="status" [(ngModel)]="product.status" placeholder="Selecione" [editable]="true"
+                  optionLabel="label" optionValue="value" (onChange)="onEdit($event, product)" appendTo="body"
+                  styleClass="custom-dropdown">
+                </p-dropdown>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="output">
+              <div [ngClass]="{
+                'afazer': product.status === 'A fazer',
+                'pedidofeito': product.status === 'Pedido feito'
+              }">
+                <span>{{ product.status }}</span>
+              </div>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-button *ngIf="!editing" icon="pi pi-trash"
+            styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
+            title: 'atenção',
+            background: '#737373',
+            width: 300,
+            color:'#fff',
+            text: 'Deseja realmente excluir o produto: '+ product.title + '?',
+            showDenyButton: true,
+            denyButtonText: 'Não',
+            confirmButtonText: 'Sim',
+            icon: 'warning'
+        }" (confirm)="deleteProduct(product._id)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

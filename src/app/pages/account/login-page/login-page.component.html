@@ -1,0 +1,30 @@
+<div class="surface-ground flex align-items-center justify-content-center max-h-screen max-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div
+      style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+      <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+        <div class="text-center mb-5">
+          <div class="text-900 text-3xl font-medium mb-3">Bem Vindo!</div>
+          <span class="text-600 font-medium">Faça o login para continuar</span>
+        </div>
+        <!-- <h2>{{mode}}</h2> -->
+        <div [formGroup]="form">
+          <label for="name" class="block text-800 text-xl font-medium mb-2">Usuário</label>
+          <input formControlName="name" id="name" type="text" placeholder="Usuário" pInputText
+            class="w-full md:w-30rem mb-5" style="padding:1rem" (keydown.enter)="submit()" pHotkey="enter">
+
+          <label for="password" class="block text-800 font-medium text-xl mb-2">Senha</label>
+          <p-password formControlName="password" id="password" [feedback]="false" placeholder="Senha"
+            [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem" (keydown.enter)="submit()"
+            pHotkey="enter"></p-password>
+
+          <div class="flex align-items-center justify-content-between mb-5 gap-5">
+
+          </div>
+          <button key="enter" pButton pRipple label="Entrar" class="w-full p-3 text-xl" pHotkey="enter"
+            (click)="submit()"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

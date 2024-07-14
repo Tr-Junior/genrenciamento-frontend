@@ -1,0 +1,79 @@
+<div class="mt-3 card">
+  <p-table [value]="budgets" dataKey="number" [paginator]="true" [rows]="100" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Orçamentos"
+      [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" styleClass="p-datatable-striped" [pSelectableRow]="true"
+      toggleable="false">
+      <ng-template pTemplate="header">
+          <tr class="p-0" pTableToggler>
+              <th></th>
+              <th pSortableColumn="client">
+                  Cliente <p-sortIcon field="client"></p-sortIcon>
+              </th>
+              <th pSortableColumn="total">
+                  Valor total <p-sortIcon field="total"></p-sortIcon>
+              </th>
+              <th>Ação</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-budget let-expanded="expanded">
+          <tr>
+              <td>
+                  <button type="button" pButton pRipple [pRowToggler]="budget"
+                      class="p-button-text p-button-rounded p-button-plain"
+                      [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+              </td>
+              <td>{{ budget.client }}</td>
+              <td>{{ calculateTotalO(budget.budget.items) | currency:'BRL' }}</td>
+              <td>
+                  <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
+                      title: 'Atenção',
+                      background: '#737373',
+                      width: 300,
+                      color: '#fff',
+                      text: 'Deseja realmente excluir o orçamento de ' + budget.client + '?',
+                      showDenyButton: true,
+                      denyButtonText: 'Não',
+                      confirmButtonText: 'Sim',
+                      icon: 'warning'
+                      }" (confirm)="removeBudget(budgets.indexOf(budget))"></p-button>
+              </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-budget>
+          <td colspan="4">
+              <div class="p-4">
+                  <p-table [value]="budget.budget.items" dataKey="product">
+                      <ng-template pTemplate="header">
+                          <tr>
+                              <th pSortableColumn="title">
+                                  Produto <p-sortIcon field="title"></p-sortIcon>
+                              </th>
+                              <th pSortableColumn="quantity">
+                                  Quantidade <p-sortIcon field="quantity"></p-sortIcon>
+                              </th>
+                              <th>Valor Unitário</th>
+                              <th>Valor Total</th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-item>
+                          <tr>
+                              <td>{{ item.title }}</td>
+                              <td>{{ item.quantity }}</td>
+                              <td>{{ item.price | currency:'BRL' }}</td>
+                              <td>{{ item.price * item.quantity | currency:'BRL' }}</td>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                          <tr>
+                              <td colspan="5">Não há itens...</td>
+                          </tr>
+                      </ng-template>
+                  </p-table>
+                  <div class="mt-3">
+                    <p-button (click)="addBudgetToCart(budget)">Adicionar Orçamento {{budgets.indexOf(budget) + 1}} ao Carrinho</p-button>
+                  </div>
+              </div>
+          </td>
+      </ng-template>
+  </p-table>
+</div>

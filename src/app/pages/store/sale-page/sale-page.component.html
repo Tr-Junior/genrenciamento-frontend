@@ -1,0 +1,164 @@
+<div class="p-grid mt-2">
+  <div class="p-col-12">
+    <div class="card">
+      <div class="flex justify-content-between flex-wrap sm:p-0"> <!-- Ajuste no espaçamento -->
+        <div class="flex align-items-center font-bold border-round "> <!-- Ajuste no espaçamento -->
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input class="text" pInputText type="text" [(ngModel)]="searchQuery" (ngModelChange)="search()"
+              placeholder="Pesquisar produtos..." />
+          </span>
+          <p-button icon="pi pi-times" styleClass=" p-button-danger p-button-text" (onClick)="clearSearch()"
+              [disabled]="!searchQuery"></p-button>
+        </div>
+        <div class="flex align-items-center font-bold border-round">
+          <!-- Botão completo visível em telas maiores que 450px -->
+          <p-button icon="pi pi-times" label="Limpar Carrinho" class="btn-full" styleClass="p-button-rounded p-button-danger p-button-text"
+            (click)="clear()"></p-button>
+          <!-- Botão com ícone apenas visível em telas menores que 450px -->
+          <p-button icon="pi pi-trash" class="btn-icon-only" styleClass="p-button-rounded p-button-danger p-button-text "
+            (click)="clear()"></p-button>
+        </div>
+      </div>
+      <p-table class="p-0" [value]="product" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="text-align: center" scope="col">Name</th>
+            <th style="text-align: center" scope="col">Estoque</th>
+            <th style="text-align: center" scope="col">Valor</th>
+            <th style="text-align: center" scope="col">Ação</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td class="p-0" style="text-align: center">{{product.title}}</td>
+            <td style="text-align: center">
+              <div
+                [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">
+                <span *ngIf="product.quantity !== 0">{{ product.quantity }}</span>
+                <span *ngIf="product.quantity === 0" class="badge">Fora de Estoque</span>
+              </div>
+            </td>
+            <td style="text-align: center">{{product.price | currency}}</td>
+            <td style="text-align: center"><p-button icon="pi pi-cart-plus" styleClass="p-button-rounded p-button-success p-button-outlined"
+                (click)="addToCart(product)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  <div class="card p-4">
+    <p-table [value]="cartItems" styleClass="p-datatable-striped" class="p-0">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">Produto</th>
+          <th style="text-align: center" scope="col">Qtd</th>
+          <th style="text-align: center" scope="col">Valor unitário</th>
+          <th style="text-align: center" scope="col">Valor Total</th>
+          <th style="text-align: center" scope="col">Ação</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-index=i>
+        <tr>
+          <td class="p-1" style="text-align: center">{{item.title}}</td>
+          <td class="p-1" style="text-align: center">
+            <div class="flex-initial flex align-items-center justify-content-center">
+              <p-inputNumber styleClass="width: 2rem" [size]="1" [(ngModel)]="item.quantity" (ngModelChange)="updateQuantity($event, item)"></p-inputNumber>
+          </div>
+          </td>
+          <td class="p-1" style="text-align: center">{{item.price | currency}}</td>
+          <td class="p-1" style="text-align: center">{{(item.price * item.quantity) | currency}}</td>
+          <td class="p-1" style="text-align: center">
+            <p-button icon=" pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text"
+              (click)="remove(item)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  </div>
+</div>
+<div class="p-0 p-col-12" *ngIf="cartItems.length === 0">
+  <div class="">
+    <br>
+    <p class="text-center text-2xl text-red-700"><em>Seu caixa está vazio</em></p>
+    <br>
+    <br>
+    <br>
+  </div>
+</div>
+<div class="col-12 p-0">
+  <div class="card px-6 pt-6">
+    <div class="p-fluid p-formgrid grid p-0">
+      <!-- Primeira linha: Forma de Pagamento e Desconto -->
+      <div class=" col-12 md:col-2">
+        <span class="text-xl">Forma de Pagamento</span>
+        <div class="mt-2">
+        <p-dropdown styleClass="ng-dirty ng-invalid w-full" placeholder="Selecione" [options]="formPaymentOptions"
+          [(ngModel)]="selectedPayment" optionLabel="label" optionValue="value"
+          (onChange)="onFormPaymentSelected($event.value)">
+        </p-dropdown>
+      </div>
+      </div>
+      <div class=" col-12 md:col-4">
+        <span class="text-xl">Desconto</span>
+        <p-inputNumber class="mt-2 desconto" [(ngModel)]="generalDiscount" (onInput)="updateGeneralDiscount(generalDiscount)"
+          placeholder="Discount" inputId="percent" prefix="%" value="0" styleClass="w-full">
+        </p-inputNumber>
+      </div>
+
+      <!-- Segunda linha: Subtotal e Valor Total -->
+      <div class=" col-12 md:col-4">
+        <span class="text-xl total">Subtotal:</span>
+        <div class="text-xl font-bold pt-3 total">{{ subtotal | currency }}</div>
+      </div>
+      <div class=" col-12 md:col-2">
+        <span class="text-xl">Valor Total:</span>
+        <div class="flex align-items-center ">
+          <p-inputNumber class="mt-2" [(ngModel)]="grandTotal" placeholder="Valor Total" mode="currency" currency="BRL" styleClass="w-full">
+          </p-inputNumber>
+        </div>
+      </div>
+
+      <!-- Terceira linha: Valor Recebido e Valor do Troco -->
+      <div class=" col-12 md:col-2">
+        <span class="text-xl">Valor Recebido:</span>
+        <p-inputNumber class="pt-2" [size]="12" id="value" inputId="integeronly" [(ngModel)]="total"
+            (onInput)="calcTroco()" mode="currency" currency="BRL" styleClass="w-full">
+        </p-inputNumber>
+      </div>
+
+      <div class=" col-12 md:col-4">
+        <span class="text-xl">Valor do Troco:</span>
+        <div class="text-white-950 font-bold text-xl pt-3">{{ totalTroco | currency }}</div>
+      </div>
+
+      <!-- Quarta linha: Botão Finalizar Venda -->
+      <div class=" col-12 md:col-6 finalizar">
+        <p-button icon="pi pi-check" iconPos="right" label="Finalizar Venda" pRipple [swal]="{
+          title: 'atenção',
+          background: '#737373',
+          width: 300,
+          color:'#fff',
+          text: 'Deseja Finalizar a Venda ?',
+          showDenyButton: true,
+          denyButtonText: 'Não',
+          confirmButtonText: 'Sim',
+          icon: 'warning'
+        }" (confirm)="submitOrder()"></p-button>
+      </div>
+
+
+      <div class="col-12 md:col-2 text-center md:text-left btn">
+        <p-button class="pdf" icon="pi pi-file-pdf" iconPos="right" label="Gerar PDF" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></p-button>
+      </div>
+      <div class="col-12 md:col-2 text-center md:text-left">
+        <input pInputText type="text" [(ngModel)]="customerName" placeholder="Nome do Cliente" />
+      </div>
+      <div class="col-12 md:col-2 text-center md:text-left btn2">
+        <p-button class="button"  icon="pi pi-id-card" iconPos="right" label="Salvar orçamento" (click)="createBudget()"></p-button>
+      </div>
+
+    </div>
+  </div>
+</div>

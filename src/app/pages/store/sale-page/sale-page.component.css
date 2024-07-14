@@ -1,0 +1,116 @@
+
+body{
+  overflow: hidden;
+}
+
+.btn-full {
+  display: flex;
+}
+
+.btn-icon-only {
+  display: none;
+}
+
+.padding {
+ padding-left: 18%;
+}
+
+.finalizar{
+  padding-top: 3%;
+  padding-left: 26%;
+}
+
+.btn {
+padding-right: 5%;
+}
+
+.btn2{
+padding-right: 2%;
+
+}
+
+.desconto {
+  padding-right: 70%;
+}
+
+.total{
+  padding-left: 80%;
+}
+
+::ng-deep .button .p-button {
+  background-color: rgb(93, 105, 110); /* Cor de fundo do botão */
+  color: white; /* Cor do texto do botão */
+  border-color: rgb(69, 77, 80);
+}
+
+/* Estilo do botão PDF */
+::ng-deep .pdf .p-button {
+  background-color: rgb(14, 110, 51); /* Cor de fundo do botão */
+  color: white; /* Cor do texto do botão */
+  border-color: rgb(10, 88, 40);
+}
+
+/* Cor do ícone */
+::ng-deep .button .p-button-icon-right {
+  color: white; /* Cor do ícone */
+}
+
+/* Estilos para o estado :hover, :active e :focus para o botão geral */
+::ng-deep .button .p-button:hover,
+::ng-deep .button .p-button:active,
+::ng-deep .button .p-button:focus {
+  background-color: rgb(93, 105, 110); /* Mesma cor de fundo */
+  color: white; /* Mesma cor do texto */
+  border-color: rgb(69, 77, 80); /* Mesma cor da borda */
+}
+
+/* Estilos para o estado :hover, :active e :focus para o botão PDF */
+::ng-deep .pdf .p-button:hover,
+::ng-deep .pdf .p-button:active,
+::ng-deep .pdf .p-button:focus {
+  background-color: rgb(14, 110, 51); /* Mesma cor de fundo */
+  color: white; /* Mesma cor do texto */
+  border-color: rgb(10, 88, 40); /* Mesma cor da borda */
+}
+
+@media (max-width: 450px) {
+
+  .p-button {
+    width: 100%;
+  }
+
+  .btn-full {
+    display: none;
+  }
+
+  .btn-icon-only {
+    display: flex;
+  }
+
+  .padding {
+    padding: 0%;
+  }
+
+  .finalizar{
+      padding-left: 0%;
+  }
+
+
+  .input-txt{
+      padding-right: 0%;
+      padding-left: 0%;
+      margin-left: 0;
+
+    }
+  .desconto {
+      padding-right: 0%;
+    }
+
+  .total{
+      padding-left: 0%;
+    }
+
+    .text{
+      width: 190px;
+    }
+}

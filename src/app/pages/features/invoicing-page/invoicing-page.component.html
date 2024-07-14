@@ -1,0 +1,63 @@
+<div class="card">
+  <ng-template pTemplate="caption">
+    <div class="table-header">
+      Entradas
+    </div>
+  </ng-template>
+  <p-table #dt [value]="entrances" [paginator]="true" [rows]="100" [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Entradas"
+    [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" [tableStyle]="{'min-width': '50rem'}"
+    styleClass="p-datatable-striped">
+
+    <ng-template pTemplate="caption">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-end">
+        <span class="p-input-icon-left m-2">
+          <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [showIcon]="true" [locale]="ptBR"
+            dateFormat="dd/mm/yy" [readonlyInput]="true" styleClass="customCalendarClass"></p-calendar>
+          <span class="mx-2"></span>
+          <button pButton type="button" label="Pesquisar" icon="pi pi-search" (click)="searchDate()"></button>
+          <span class="px-2"></span>
+          <button pButton type="button" label="Limpar" icon="pi pi-times" (click)="clearSearch()"></button>
+        </span>
+      </div>
+    </ng-template>
+
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 25%">Código</th>
+        <th style="width: 25%">Tipo da entrada</th>
+        <th style="width: 25%">Valor</th>
+        <th style="width: 25%">Data</th>
+        <th style="width: 25%">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-entrances>
+      <tr>
+        <td>{{ entrances.numberOfOrder }}</td>
+        <td>{{ entrances.typeOrder }}</td>
+        <td>{{ entrances.value | currency }}</td>
+        <td>{{ entrances.createDate | date:"dd/MM/yyyy HH:mm" }}</td>
+        <td>
+          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
+              title: 'Atenção',
+              background: '#737373',
+              width: 300,
+              color: '#fff',
+              text: 'Deseja realmente excluir: ' + entrances.typeOrder + '?',
+              showDenyButton: true,
+              denyButtonText: 'Não',
+              confirmButtonText: 'Sim',
+              icon: 'warning'
+            }" (confirm)="delete(entrances._id, entrances.numberOfOrder)">
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+  <h5 class="uk-text-center" *ngIf="entrances.length === 0">Não há Produtos Cadastrados</h5>
+</div>

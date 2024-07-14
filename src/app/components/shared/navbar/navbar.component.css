@@ -1,0 +1,222 @@
+/* Esconde o menu pequeno em telas maiores que 450px */
+.small-screen-menu {
+  display: none;
+}
+
+.margin {
+  margin-right: 25px;
+}
+
+/* Mostra o menu grande em telas maiores que 450px */
+.large-screen-menu {
+  display: block;
+}
+
+@media (max-width: 450px) {
+  .small-screen-menu {
+    display: block;
+  }
+
+  .large-screen-menu {
+    display: none;
+  }
+
+  .menu-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-bar p-button:last-child {
+    margin-left: auto;
+  }
+
+  .card {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .small-screen-menu,
+  .large-screen-menu {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .menu-content {
+    padding: 1rem;
+  }
+
+  .large-screen-menu .p-menubar {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .large-screen-menu .p-menubar .p-menuitem {
+    margin-right: 1rem;
+  }
+
+  .info {
+    padding-left: 0;
+    flex: 1;
+  }
+
+  .custom-badge {
+    background-color: #ff0000; /* Defina a cor de fundo desejada para o badge */
+  }
+
+  .logout {
+    padding-left: 20px;
+  }
+
+  .bell {
+    margin-left: 150px;
+  }
+}
+
+@media (max-width: 400px) {
+  .menu-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .small-screen-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .large-screen-menu {
+    display: none; /* Certificar-se de que o menu grande esteja escondido */
+  }
+
+  .menu-content {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .info {
+    padding-left: 0;
+    flex: 1;
+  }
+
+  .card {
+    max-width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 50px;
+    margin-right: 10px; /* Ajuste o valor conforme necessário */
+  }
+
+  .logout {
+    padding-left: 30px;
+  }
+
+  .bell {
+    margin-left: 100px;
+  }
+
+  .logout-button .pi-sign-out {
+    font-size: 1.5rem; /* Ajuste o tamanho do ícone conforme necessário */
+  }
+
+  .logout-button span {
+    display: none; /* Esconde o texto do botão de sair */
+  }
+}
+
+/* Estilos adicionais para telas menores que 380px */
+@media (max-width: 380px) {
+  .menu-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .small-screen-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .large-screen-menu {
+    display: none; /* Certificar-se de que o menu grande esteja escondido */
+  }
+
+  .menu-content {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .info {
+    padding-left: 0;
+    flex: 1;
+  }
+
+  .card {
+    max-width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+
+  .logout {
+  }
+
+  .bell {
+    margin-right: 60px;
+  }
+
+  .logout-button .pi-sign-out {
+    font-size: 1.5rem; /* Ajuste o tamanho do ícone conforme necessário */
+  }
+
+  .logout-button span {
+    display: none; /* Esconde o texto do botão de sair */
+  }
+  .responsive-overlay .p-overlayPanel-content {
+    max-width: 90vw; /* Ajuste conforme necessário */
+    max-height: 90vh; /* Ajuste conforme necessário */
+    overflow-y: auto;
+  }
+
+  .responsive-overlay .p-overlayPanel-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1.5rem;
+  }
+}
