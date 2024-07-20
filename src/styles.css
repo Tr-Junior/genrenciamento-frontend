@@ -1,4 +1,6 @@
 @import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+
+
 .custom-menu .p-menuitem-text {
   font-size: 12px; /* ajuste o tamanho conforme necessário */
 }

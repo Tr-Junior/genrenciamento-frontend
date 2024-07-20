@@ -13,15 +13,17 @@
         </div>
         <div class="flex align-items-center font-bold border-round">
           <!-- Botão completo visível em telas maiores que 450px -->
-          <p-button icon="pi pi-times" label="Limpar Caixa" class="btn-full" styleClass="p-button-rounded p-button-danger p-button-text"
+          <p-button icon="pi pi-times" label="Limpar Carrinho" class="btn-full" styleClass="p-button-rounded p-button-danger p-button-text"
             (click)="clear()"></p-button>
           <!-- Botão com ícone apenas visível em telas menores que 450px -->
+          <p-button icon="pi pi-trash" class="btn-icon-only" styleClass="p-button-rounded p-button-danger p-button-text "
+            (click)="clear()"></p-button>
         </div>
       </div>
-      <p-table class="p-0" [value]="product" styleClass="p-datatable-striped" [scrollable]="true" scrollHeight="400px" [tableStyle]="{'min-width': '50rem'}">
+      <p-table class="p-0" [value]="product" styleClass="p-datatable-striped">
         <ng-template pTemplate="header">
           <tr>
-            <th style="text-align: center" scope="col">Name</th>
+            <th style="text-align: center" scope="col">Produto</th>
             <th style="text-align: center" scope="col">Estoque</th>
             <th style="text-align: center" scope="col">Valor</th>
             <th style="text-align: center" scope="col">Ação</th>
@@ -45,12 +47,12 @@
         </ng-template>
       </p-table>
     </div>
-  <div class="card p-4">
-    <p-table [value]="cartItems" styleClass="p-datatable-striped" class="p-0">
+  <div class="card">
+    <p-table [value]="cartItems" styleClass="p-datatable-striped" class="p-1">
       <ng-template pTemplate="header">
         <tr>
           <th scope="col">Produto</th>
-          <th style="text-align: center" scope="col">Qtd</th>
+          <th style="text-align: center" scope="col">Quantidade</th>
           <th style="text-align: center" scope="col">Valor unitário</th>
           <th style="text-align: center" scope="col">Valor Total</th>
           <th style="text-align: center" scope="col">Ação</th>

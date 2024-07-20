@@ -1,0 +1,15 @@
+
+.btn-icon-only {
+  display: none;
+}
+
+
+@media (max-width: 450px) {
+  .btn-full {
+    display: none;
+  }
+
+  .btn-icon-only {
+    display: flex;
+  }
+}

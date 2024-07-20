@@ -1,0 +1,13 @@
+/* Esconde o menu pequeno em telas maiores que 450px */
+.small-screen-menu {
+  display: none;
+}
+
+.margin {
+  margin-right: 25px;
+}
+
+/* Mostra o menu grande em telas maiores que 450px */
+.large-screen-menu {
+  display: block;
+}
