@@ -56,7 +56,7 @@ import { BudgetPageComponent } from './pages/store/budget-page/budget-page.compo
 import { LowStockNotificationService } from './services/low-stok-notification.service';
 import { LoginModalComponent } from './pages/account/login-sales/login-sales.component';
 import { ProductsBuyComponent } from './pages/features/products-buy/products-buy.component';
-
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 registerLocaleData(ptBR);
 
@@ -130,6 +130,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     OverlayPanelModule,
     BadgeModule,
     ProgressSpinnerModule,
+    AutoCompleteModule,
     MenubarModule
   ],
   providers: [DataService, AuthService, LowStockNotificationService, ConfirmationService, MessageService, DatePipe,

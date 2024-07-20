@@ -32,8 +32,16 @@ export class NavbarComponent {
   ) { }
 
   ngOnInit(): void {
+
     this.user = Security.getUser();
     this.items = [
+      {
+        label: this.capitalizeFirstLetter(this.user.name),
+        items: [
+          { label: 'Cadastro de usuário', icon: 'pi pi-user-plus', routerLink: '/account/new-user' },
+          { label: 'Alterar senha', icon: 'pi pi-key', routerLink: '/account/passwordChange' }
+        ]
+    },
       { label: 'Lista de Produtos', icon: 'pi pi-list', routerLink: '/store' },
       { label: 'Caixa', icon: 'pi pi-cart-plus', routerLink: '/sale' },
       { label: 'Orçamentos', icon: 'pi pi-file-export', routerLink: '/sale/budget' },
@@ -41,15 +49,18 @@ export class NavbarComponent {
       { label: 'Faturamento', icon: 'pi pi-chart-line', routerLink: '/features/entranceAndExit' },
       { label: 'Pedidos', icon: 'pi pi-shopping-bag', routerLink: '/ProductsToBuy' }
     ];
-    this.userItems = [
-      { label: 'Cadastro de usuário', icon: 'pi pi-user-plus', routerLink: '/account/new-user' },
-      { label: 'Alterar senha', icon: 'pi pi-key', routerLink: '/account/passwordChange' }
-    ];
     this.lowStockNotificationService.lowStockProducts$.subscribe(products => {
       this.lowStockProducts = products;
     });
     this.listProd();
+
+
   }
+
+  capitalizeFirstLetter(name: string): string {
+    if (!name) return name;
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
 
   toggleMenu() {
     this.showMenu = !this.showMenu;

@@ -19,13 +19,14 @@ export class CartUtil {
     title: string,
     quantity: number,
     price: number,
+    purchasePrice: number,
     discount: number,
   ) {
     // Obtém o carrinho
     let cart = this.get();
 
     // Gera o novo item
-    const item = new CartItem(_id, title, quantity, discount, price);
+    const item = new CartItem(_id, title, quantity, discount, price, purchasePrice);
     // Adiciona ao carrinho
 
     const existingItemIndex = cart.items.findIndex(i => i._id === item._id);
@@ -44,6 +45,7 @@ export class CartUtil {
     title: string,
     quantity: number,
     price: number,
+    purchasePrice: number,
     discount: number
   ) {
     // Obtém o carrinho
@@ -58,7 +60,7 @@ export class CartUtil {
       // Recalcule o valor total com desconto para o item
     } else {
       // Se o item não existe, adicione-o ao carrinho
-      const item = new CartItem(_id, title, quantity, discount, price);
+      const item = new CartItem(_id, title, quantity, discount, price, purchasePrice);
       // Calcula o valor total com desconto do item
       cart.items.push(item);
     }

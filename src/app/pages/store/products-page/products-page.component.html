@@ -6,7 +6,7 @@
 </p-dialog>
 
 <div class="card px-4 pt-2">
-  <p-table  [value]="product" dataKey="_id" editMode="row" [tableStyle]="{'min-width': '50rem'}" [paginator]="true"
+  <p-table [value]="product" dataKey="_id" editMode="row" [tableStyle]="{'min-width': '50rem'}" [paginator]="true"
     [rows]="100" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} produtos"
     [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" [tableStyle]="{'min-width': '50rem'}"
@@ -20,17 +20,19 @@
               placeholder="Pesquisar produtos..." />
           </span>
           <p-button icon="pi pi-times" styleClass=" p-button-danger p-button-text" (onClick)="clearSearch()"
-              [disabled]="!searchQuery"></p-button>
+            [disabled]="!searchQuery"></p-button>
         </div>
         <div class="show-on-small">
-          <button pButton type="button" icon="pi pi-plus"  (click)="openModal()"></button>
+          <button pButton type="button" icon="pi pi-plus" (click)="openModal()"></button>
         </div>
-          <button pButton type="button" icon="pi pi-file-excel"  class="export-button p-button-success" (click)="exportToExcel()"></button>
-          <p-button icon="pi pi-file-excel" styleClass="p-button-success" class="pl-2 export-icon" (click)="exportToExcel()"></p-button>
-    </div>
+        <button pButton type="button" icon="pi pi-file-excel" class="export-button p-button-success"
+          (click)="exportToExcel()"></button>
+        <p-button icon="pi pi-file-excel" styleClass="p-button-success" class="pl-2 export-icon"
+          (click)="exportToExcel()"></p-button>
+      </div>
 
     </ng-template>
-    <ng-template  pTemplate="header">
+    <ng-template pTemplate="header">
       <tr>
         <th style="text-align: center">#</th>
         <th style="text-align: center">Nome</th>
@@ -76,8 +78,8 @@
           <p-cellEditor>
             <ng-template pTemplate="input">
               <input size="6" pInputText type="text" pKeyFilter="num" id="number"
-                onkeypress="return event.charCode >= 48 && event.charCode <= 57" [(ngModel)]="selectedProduct.min_quantity"
-                required>
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                [(ngModel)]="selectedProduct.min_quantity" required>
             </ng-template>
             <ng-template pTemplate="output">
               <div class="min-stok">
@@ -89,8 +91,8 @@
         <td style="text-align: center">
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <p-inputNumber [size]="6" pKeyFilter="num" inputId="currency-user" mode="currency" currency="BRL" locale="pt"
-                [(ngModel)]="selectedProduct.purchasePrice"></p-inputNumber>
+              <p-inputNumber [size]="6" pKeyFilter="num" inputId="currency-user" mode="currency" currency="BRL"
+                locale="pt" [(ngModel)]="selectedProduct.purchasePrice"></p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
               {{product.purchasePrice | currency}}
@@ -100,8 +102,8 @@
         <td style="text-align: center">
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <p-inputNumber [size]="6" pKeyFilter="num" id="number" inputId="currency-user" mode="currency" currency="BRL"
-                locale="pt" [(ngModel)]="selectedProduct.price"></p-inputNumber>
+              <p-inputNumber [size]="6" pKeyFilter="num" id="number" inputId="currency-user" mode="currency"
+                currency="BRL" locale="pt" [(ngModel)]="selectedProduct.price"></p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
               {{product.price | currency}}
@@ -140,5 +142,4 @@
     </ng-template>
   </p-table>
   <h5 class="uk-text-center" *ngIf="product.length == 0">Não há Produtos Cadastrados</h5>
-
 </div>

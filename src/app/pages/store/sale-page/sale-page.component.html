@@ -5,7 +5,7 @@
         <div class="flex align-items-center font-bold border-round "> <!-- Ajuste no espaçamento -->
           <span class="p-input-icon-left ml-auto">
             <i class="pi pi-search"></i>
-            <input class="text" pInputText type="text" [(ngModel)]="searchQuery" (ngModelChange)="search()"
+            <input class="text" pInputText type="text" (keyup)="onKeyUp($event)"  [(ngModel)]="searchQuery" (ngModelChange)="search()"
               placeholder="Pesquisar produtos..." />
           </span>
           <p-button icon="pi pi-times" styleClass=" p-button-danger p-button-text" (onClick)="clearSearch()"
@@ -13,14 +13,12 @@
         </div>
         <div class="flex align-items-center font-bold border-round">
           <!-- Botão completo visível em telas maiores que 450px -->
-          <p-button icon="pi pi-times" label="Limpar Carrinho" class="btn-full" styleClass="p-button-rounded p-button-danger p-button-text"
+          <p-button icon="pi pi-times" label="Limpar Caixa" class="btn-full" styleClass="p-button-rounded p-button-danger p-button-text"
             (click)="clear()"></p-button>
           <!-- Botão com ícone apenas visível em telas menores que 450px -->
-          <p-button icon="pi pi-trash" class="btn-icon-only" styleClass="p-button-rounded p-button-danger p-button-text "
-            (click)="clear()"></p-button>
         </div>
       </div>
-      <p-table class="p-0" [value]="product" styleClass="p-datatable-striped">
+      <p-table class="p-0" [value]="product" styleClass="p-datatable-striped" [scrollable]="true" scrollHeight="400px" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="header">
           <tr>
             <th style="text-align: center" scope="col">Name</th>
@@ -91,7 +89,7 @@
   <div class="card px-6 pt-6">
     <div class="p-fluid p-formgrid grid p-0">
       <!-- Primeira linha: Forma de Pagamento e Desconto -->
-      <div class=" col-12 md:col-2">
+      <div class=" col-12 md:col-3">
         <span class="text-xl">Forma de Pagamento</span>
         <div class="mt-2">
         <p-dropdown styleClass="ng-dirty ng-invalid w-full" placeholder="Selecione" [options]="formPaymentOptions"
@@ -100,15 +98,15 @@
         </p-dropdown>
       </div>
       </div>
-      <div class=" col-12 md:col-4">
+      <div class=" col-12 md:col-2">
         <span class="text-xl">Desconto</span>
         <p-inputNumber class="mt-2 desconto" [(ngModel)]="generalDiscount" (onInput)="updateGeneralDiscount(generalDiscount)"
           placeholder="Discount" inputId="percent" prefix="%" value="0" styleClass="w-full">
         </p-inputNumber>
       </div>
-
+      <div class="md:col-3"></div>
       <!-- Segunda linha: Subtotal e Valor Total -->
-      <div class=" col-12 md:col-4">
+      <div class=" col-12 md:col-2">
         <span class="text-xl total">Subtotal:</span>
         <div class="text-xl font-bold pt-3 total">{{ subtotal | currency }}</div>
       </div>
@@ -128,13 +126,13 @@
         </p-inputNumber>
       </div>
 
-      <div class=" col-12 md:col-4">
+      <div class=" col-12 md:col-7">
         <span class="text-xl">Valor do Troco:</span>
         <div class="text-white-950 font-bold text-xl pt-3">{{ totalTroco | currency }}</div>
       </div>
 
       <!-- Quarta linha: Botão Finalizar Venda -->
-      <div class=" col-12 md:col-6 finalizar">
+      <div class=" col-12 md:col-3 finalizar mt-5">
         <p-button icon="pi pi-check" iconPos="right" label="Finalizar Venda" pRipple [swal]="{
           title: 'atenção',
           background: '#737373',
@@ -152,10 +150,10 @@
       <div class="col-12 md:col-2 text-center md:text-left btn">
         <p-button class="pdf" icon="pi pi-file-pdf" iconPos="right" label="Gerar PDF" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></p-button>
       </div>
-      <div class="col-12 md:col-2 text-center md:text-left">
+      <div class="col-12 md:col-3 text-center md:text-left">
         <input pInputText type="text" [(ngModel)]="customerName" placeholder="Nome do Cliente" />
       </div>
-      <div class="col-12 md:col-2 text-center md:text-left btn2">
+      <div class="col-12 md:col-3 text-center md:text-left btn2">
         <p-button class="button"  icon="pi pi-id-card" iconPos="right" label="Salvar orçamento" (click)="createBudget()"></p-button>
       </div>
 

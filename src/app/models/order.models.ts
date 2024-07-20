@@ -4,6 +4,7 @@ export interface SaleItem {
   title: string;
   quantity: number;
   price: number;
+  purchasePrice: number,
   _id: string;
 }
 export interface Order {

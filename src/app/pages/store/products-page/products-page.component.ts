@@ -216,6 +216,7 @@ export class ProductsPageComponent implements OnInit {
         _id: product._id,
         title: product.title,
         price: product.price,
+        purchasePrice: product.purchasePrice,
         quantity: 1,
         discount: 0
       };
@@ -242,7 +243,7 @@ export class ProductsPageComponent implements OnInit {
         cart.items.push(item);
         this.toastr.success(data.message, 'Produto adicionado');
       }
-      CartUtil.add(item._id, item.title, item.quantity, item.price, item.discount);
+      CartUtil.add(item._id, item.title, item.quantity, item.price, item.discount, item.purchasePrice);
     }
   }
 

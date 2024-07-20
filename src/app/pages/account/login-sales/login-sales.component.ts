@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Security } from '../../../utils/Security.util';
@@ -17,6 +17,11 @@ export class LoginModalComponent {
     private router: Router
   ) {}
 
+  @ViewChild('passwordInput') passwordInput!: ElementRef;
+
+  ngAfterViewInit() {
+    this.passwordInput.nativeElement.focus();
+  }
 
   ngOnInit(): void {
     this.clear();

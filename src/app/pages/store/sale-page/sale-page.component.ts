@@ -98,6 +98,7 @@ export class SalePageComponent {
       _id: product._id,
       title: product.title,
       price: product.price,
+      purchasePrice: product.purchasePrice,
       quantity: 1,
       discount: 0,
     };
@@ -123,7 +124,7 @@ export class SalePageComponent {
     }
 
     this.toastr.success(data.message, 'Produto adicionado');
-    CartUtil.add(item._id, item.title, item.quantity, item.price, item.discount);
+    CartUtil.add(item._id, item.title, item.quantity, item.price, item.discount, item.purchasePrice);
     this.loadCart();
   }
 
@@ -171,7 +172,7 @@ export class SalePageComponent {
     item.quantity = updatedQuantity;
 
     // Atualiza o item no carrinho no local storage
-    CartUtil.updateItem(item._id, item.title, item.quantity, item.price, item.discount);
+    CartUtil.updateItem(item._id, item.title, item.quantity, item.price, item.discount, item.purchasePrice);
 
     // Recalcula o total após a atualização da quantidade
     this.calculateTotal();
@@ -194,7 +195,7 @@ export class SalePageComponent {
     this.subtotal = CartUtil.getSubtotal();
     this.grandTotal = CartUtil.getGrandTotal();
     this.clearPaymentMethod();
-    this.toastr.success('Carrinho esvaziado com sucesso', 'Limpar Carrinho');
+    this.toastr.success('Caixa limpo com sucesso');
 
   }
 
@@ -215,6 +216,7 @@ export class SalePageComponent {
           return {
             quantity: item.quantity,
             price: item.price,
+            purchasePrice: item.purchasePrice,
             discount: item.discount,
             title: item.title,
             product: item._id
@@ -243,6 +245,7 @@ export class SalePageComponent {
     this.clearPaymentMethod();
     this.loadCart();
     this.clearTroco();
+    this.clearSearch();
   }
 
 // cria orçamentos
@@ -265,6 +268,7 @@ createBudget() {
         return {
           quantity: item.quantity,
           price: item.price,
+          purchasePrice: item.purchasePrice,
           title: item.title,
           product: item._id
         };
@@ -304,7 +308,7 @@ createBudget() {
   }
 
   search(): void {
-    if (!this.searchQuery) {
+    if (this.searchQuery.trim() === '') {
       this.product = [];
       this.clearSearch();
       return;
@@ -328,16 +332,26 @@ createBudget() {
     });
   }
 
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.product = [];
+    this.busy = false; // Se aplicável, defina busy como falso
+  }
+
+  onKeyUp(event: KeyboardEvent): void {
+    if (event.key === 'Backspace' && this.searchQuery.trim() === '') {
+      this.clearSearch();
+    } else {
+      this.search();
+    }
+  }
+
 
   onFormPaymentSelected(formPayment: string): void {
     this.selectedPayment = formPayment;
     CartUtil.addPaymentForm(formPayment);
   }
 
-  clearSearch(): void {
-    this.searchQuery = '';
-    this.search();
-  }
 
   calcTroco() {
     if (this.total > 0) {
@@ -356,7 +370,7 @@ createBudget() {
   }
 
 
-  logo = 'assets/image/logof2.png'; // Adicione aqui a string base64 da sua imagem
+  logo = 'assets/image/logo2.png'; // Adicione aqui a string base64 da sua imagem
   nome = 'Conexão elétrica e hidráulica';
   endereco = 'Qd 33 Conj "B" N° 01-A setor 2  -  Águas Lindas de Goiás';
   telefone = '(61) 99571-0019';

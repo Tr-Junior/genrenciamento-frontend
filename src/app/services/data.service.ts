@@ -16,7 +16,6 @@ import { ProductsBuy} from "../models/productsBuy-model";
 })
 export class DataService {
 
-  //public API = 'http://wrconexao.kinghost.net:21048';
 
   public API = `${environment.API}`;
 
@@ -186,4 +185,7 @@ export class DataService {
     return this.http.delete(`${this.API}/productBuy/` + id, { headers: this.composeHeaders() });
   }
 
+  searchProductBuy(data: any): Observable<ProductsBuy[]> {
+    return this.http.post<ProductsBuy[]>(`${this.API}/productBuy/search`, data, { headers: this.composeHeaders() });
+  }
 }

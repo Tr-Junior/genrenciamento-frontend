@@ -50,7 +50,7 @@ const routes: Routes = [
     path: 'features',
     component: FramePageComponent,
     children: [
-      { path: 'entranceAndExit', component: EntranceAndExitComponent, canActivate: [LoginRedirectGuard, AuthService] },
+      { path: 'entranceAndExit', component: EntranceAndExitComponent, canActivate: [ AuthService] },
       { path: 'invoicing', component: InvoicingPageComponent, canActivate: [AuthService] },
       { path: 'exits', component: ExitsPageComponent, canActivate: [AuthService] },
       { path: 'details', component: DetailsPageComponent, canActivate: [AuthService] }
@@ -67,7 +67,7 @@ const routes: Routes = [
     path: 'sales',
     component: FramePageComponent,
     children: [
-      { path: '', component: SalesPageComponent, canActivate: [LoginRedirectGuard, AuthService] },
+      { path: '', component: SalesPageComponent, canActivate: [ AuthService] },
     ]
   },
   {

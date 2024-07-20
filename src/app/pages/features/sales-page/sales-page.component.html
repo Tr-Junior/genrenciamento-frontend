@@ -1,12 +1,13 @@
 <div class="card">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- Mostrar os totais por forma de pagamento -->
+    <!-- Mostrar os totais por forma de pagamento e o lucro estimado total -->
     <div *ngFor="let paymentTotal of paymentTotals" class="font-bold text-gray-900 m-2 px-4 py-2 border-rounded"
       [ngClass]="paymentTotal.className">
       {{ paymentTotal.paymentMethod }}: {{ paymentTotal.total | currency }}
     </div>
   </div>
 </div>
+
 <div class="card">
   <div class="flex flex-col md:flex-row md:items-center md:justify-end m-2">
     <span class="p-input-icon-left">
@@ -17,6 +18,7 @@
       <span class="px-2"></span>
       <button pButton type="button" label="Limpar" icon="pi pi-times" (click)="clearSearch()"></button>
     </span>
+    <button class="ml-4" pButton type="button" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)">Gerar relatório</button>
   </div>
 
   <app-loading style="text-align: center" *ngIf="busy"></app-loading>
@@ -43,14 +45,14 @@
         <th>Ação</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-order let-expanded="expanded">
+    <ng-template pTemplate="body" let-order let-expanded="expanded" let-ri="rowIndex">
       <tr>
         <td>
           <button type="button" pButton pRipple [pRowToggler]="order"
             class="p-button-text p-button-rounded p-button-plain"
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
         </td>
-        <td>{{ order.number }}</td>
+        <td>{{ri+1}}</td>
         <td>{{ order.createDate | date: 'dd/MM/yyyy HH:mm'}}</td>
         <td>{{ order.customer.name }}</td>
         <td>{{ order.sale.formPayment }}</td>
@@ -70,15 +72,12 @@
         </td>
       </tr>
     </ng-template>
-    <ng-template pTemplate="rowexpansion" let-order>
+    <ng-template pTemplate="rowexpansion" let-order >
       <td colspan="7">
         <div class="p-3">
           <p-table [value]="order.sale.items" dataKey="product">
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="product">
-                  Id <p-sortIcon field="product"></p-sortIcon>
-                </th>
                 <th pSortableColumn="title">
                   Produto <p-sortIcon field="title"></p-sortIcon>
                 </th>
@@ -87,15 +86,16 @@
                 </th>
                 <th>Valor Unitário</th>
                 <th>Valor Total</th>
+                <th>Lucro estimado</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-items>
               <tr>
-                <td>{{ items.product }}</td>
                 <td>{{ items.title }}</td>
                 <td>{{ items.quantity }}</td>
                 <td>{{ items.price | currency}}</td>
                 <td>{{ items.price * items.quantity | currency}}</td>
+                <td>{{ items.purchasePrice * items.quantity | currency}}</td>
               </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
@@ -108,3 +108,7 @@
       </td>
     </ng-template>
   </p-table>
+<!-- Adiciona o botão para gerar o PDF -->
+
+
+

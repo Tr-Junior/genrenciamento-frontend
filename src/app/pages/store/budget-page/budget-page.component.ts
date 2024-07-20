@@ -96,11 +96,12 @@ export class BudgetPageComponent implements OnInit {
           title: productDetails.title,
           price: productDetails.price,
           quantity: item.quantity,
+          purchasePrice: item.purchasePrice,
           discount: 0,
         };
 
         // Adiciona o item ao carrinho no localStorage
-        CartUtil.add(cartItem._id, cartItem.title, cartItem.quantity, cartItem.price, cartItem.discount);
+        CartUtil.add(cartItem._id, cartItem.title, cartItem.quantity, cartItem.price, cartItem.discount , cartItem.purchasePrice);
       } catch (error) {
         console.error('Erro ao obter detalhes do produto:', error);
         this.toastr.error('Erro ao adicionar item ao carrinho', 'Erro');
