@@ -5,8 +5,8 @@
   <app-produc-registration-page></app-produc-registration-page>
 </p-dialog>
 
-<div class="card px-4 pt-2">
-  <p-table [value]="product" dataKey="_id" editMode="row" [tableStyle]="{'min-width': '50rem'}" [paginator]="true"
+<div class="card m-2">
+  <p-table class="" [value]="product" dataKey="_id" editMode="row" [tableStyle]="{'min-width': '50rem'}" [paginator]="true"
     [rows]="100" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} produtos"
     [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" [tableStyle]="{'min-width': '50rem'}"

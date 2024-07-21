@@ -1,7 +1,7 @@
 <div class="p-grid mt-2">
   <div class="p-col-12">
     <div class="card">
-      <div class="flex justify-content-between flex-wrap sm:p-0"> <!-- Ajuste no espaçamento -->
+      <div class="flex justify-content-between flex-wrap sm:p-0 mb-2"> <!-- Ajuste no espaçamento -->
         <div class="flex align-items-center font-bold border-round "> <!-- Ajuste no espaçamento -->
           <span class="p-input-icon-left ml-auto">
             <i class="pi pi-search"></i>
@@ -88,7 +88,7 @@
   </div>
 </div>
 <div class="col-12 p-0">
-  <div class="card px-6 pt-6">
+  <div class="card px-2 pt-2">
     <div class="p-fluid p-formgrid grid p-0">
       <!-- Primeira linha: Forma de Pagamento e Desconto -->
       <div class=" col-12 md:col-3">
@@ -106,9 +106,9 @@
           placeholder="Discount" inputId="percent" prefix="%" value="0" styleClass="w-full">
         </p-inputNumber>
       </div>
-      <div class="md:col-3"></div>
+      <div class="md:col-4"></div>
       <!-- Segunda linha: Subtotal e Valor Total -->
-      <div class=" col-12 md:col-2">
+      <div class=" col-12 md:col-1">
         <span class="text-xl total">Subtotal:</span>
         <div class="text-xl font-bold pt-3 total">{{ subtotal | currency }}</div>
       </div>

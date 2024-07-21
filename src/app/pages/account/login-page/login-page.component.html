@@ -13,10 +13,9 @@
           <input formControlName="name" id="name" type="text" placeholder="Usuário" pInputText
             class="w-full md:w-30rem mb-5" style="padding:1rem" (keydown.enter)="submit()" pHotkey="enter">
 
-          <label for="password" class="block text-800 font-medium text-xl mb-2">Senha</label>
-          <p-password formControlName="password" id="password" [feedback]="false" placeholder="Senha"
-            [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem" (keydown.enter)="submit()"
-            pHotkey="enter"></p-password>
+            <label for="name" class="block text-800 text-xl font-medium mb-2">Senha</label>
+            <input formControlName="password" id="password" type="password" placeholder="Senha" pInputText
+              class="w-full md:w-30rem mb-5" style="padding:1rem" (keydown.enter)="submit()" pHotkey="enter">
 
           <div class="flex align-items-center justify-content-between mb-5 gap-5">
 

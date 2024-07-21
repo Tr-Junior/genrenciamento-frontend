@@ -151,7 +151,7 @@ export class SalesPageComponent implements OnInit {
     }
   }
 
-  logo = 'assets/image/logo2.png'; // Adicione aqui a string base64 da sua imagem
+  logo = 'assets/image/placa.png'; // Adicione aqui a string base64 da sua imagem
   nome = '';
   endereco = '';
   telefone = '';
@@ -168,50 +168,37 @@ export class SalesPageComponent implements OnInit {
     // Título do relatório
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Relatório de Vendas', doc.internal.pageSize.getWidth() / 2, 80, { align: 'center' });
-
-    // // Informações de contato
-    // doc.setFontSize(12);
-    // doc.setFont('helvetica', 'normal');
-    // doc.text(`Nome: ${name}`, 10, 60);
-    // doc.text(`Endereço: ${endereco}`, 10, 70);
-    // doc.text(`Telefone: ${telefone}`, 10, 80);
-    // doc.text(`CNPJ: ${cnpj}`, 10, 90);
-
-    // // Data e Hora local
-    // const currentDate = new Date();
-    // const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    // doc.text(`Data e Hora: ${formattedDate}`, 10, 100);
+    doc.text('Relatório de Vendas', doc.internal.pageSize.getWidth() / 2, 60, { align: 'center' });
 
     // Linha de separação
     doc.setLineWidth(0.5);
     doc.setDrawColor(0, 0, 0);
-    doc.line(10, 105, doc.internal.pageSize.getWidth() - 10, 105);
+    doc.line(10, 75, doc.internal.pageSize.getWidth() - 10, 75);
 
     // Totais por forma de pagamento centralizados e lado a lado
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('Totais por Forma de Pagamento:', doc.internal.pageSize.getWidth() / 2, 115, { align: 'center' });
+    doc.text('Totais por Forma de Pagamento:', doc.internal.pageSize.getWidth() / 2, 85, { align: 'center' });
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
 
-    let y = 125;
+    let y = 95;
     let paymentTotalTextLine1 = '';
     let paymentTotalTextLine2 = '';
     const halfLength = Math.ceil(this.paymentTotals.length / 2);
 
     this.paymentTotals.slice(0, halfLength).forEach(paymentTotal => {
-      paymentTotalTextLine1 += `${paymentTotal.paymentMethod}: R$ ${paymentTotal.total.toFixed(2)}    `;
-  });
+        paymentTotalTextLine1 += `${paymentTotal.paymentMethod}: R$ ${paymentTotal.total.toFixed(2)}    `;
+    });
 
-  this.paymentTotals.slice(halfLength).forEach(paymentTotal => {
-      paymentTotalTextLine2 += `${paymentTotal.paymentMethod}: R$ ${paymentTotal.total.toFixed(2)}    `;
-  });
+    this.paymentTotals.slice(halfLength).forEach(paymentTotal => {
+        paymentTotalTextLine2 += `${paymentTotal.paymentMethod}: R$ ${paymentTotal.total.toFixed(2)}    `;
+    });
 
-  doc.text(paymentTotalTextLine1, doc.internal.pageSize.getWidth() / 2, y, { align: 'center' });
-  y += 6;
-  doc.text(paymentTotalTextLine2, doc.internal.pageSize.getWidth() / 2, y, { align: 'center' });
-  y += 6;
+    doc.text(paymentTotalTextLine1, doc.internal.pageSize.getWidth() / 2, y, { align: 'center' });
+    y += 6;
+    doc.text(paymentTotalTextLine2, doc.internal.pageSize.getWidth() / 2, y, { align: 'center' });
+    y += 6;
 
     // Linha de separação antes das vendas
     doc.setLineWidth(0.5);
@@ -245,11 +232,12 @@ export class SalesPageComponent implements OnInit {
                 fontSize: 10,
                 textColor: [0, 0, 0],
                 lineColor: [0, 0, 0],
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                fillColor: [255, 255, 255] // Branco (transparente)
             },
             headStyles: {
-                fillColor: [54, 162, 235],
-                textColor: [255, 255, 255],
+                fillColor: [255, 255, 255], // Branco (transparente)
+                textColor: [0, 0, 0],
                 fontSize: 12,
                 halign: 'center'
             },
@@ -289,11 +277,12 @@ export class SalesPageComponent implements OnInit {
                 fontSize: 10,
                 textColor: [0, 0, 0],
                 lineColor: [0, 0, 0],
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                fillColor: [255, 255, 255] // Branco (transparente)
             },
             headStyles: {
-                fillColor: [54, 162, 235],
-                textColor: [255, 255, 255],
+                fillColor: [255, 255, 255], // Branco (transparente)
+                textColor: [0, 0, 0],
                 fontSize: 12,
                 halign: 'center'
             },
@@ -317,6 +306,7 @@ export class SalesPageComponent implements OnInit {
     // Salva o PDF
     doc.save('relatorio_vendas.pdf');
 }
+
 
 }
 
