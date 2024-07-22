@@ -1,34 +1,39 @@
 <app-loading style="text-align: center" *ngIf="busy"></app-loading>
 <div [formGroup]="form" class="card form-container py-4 mt-3 p-formgrid grid">
   <div class="">
-    <span class="font-bold block mb-2 ml-4">Nome do Produto</span>
-    <input class="mr-2 ml-4" pInputText id="product" formControlName="title"
-      [ngClass]="{'uk-form-danger': (!form.controls['title'].valid && !form.controls['title'].pristine) }" />
+    <span class="font-bold block mb-2 ml-4 truncate" pTooltip="Nome do Produto" tooltipPosition="top">Nome do Produto</span>
+    <input class="mr-2 ml-4 truncate" pInputText id="product" formControlName="title"
+      [ngClass]="{'uk-form-danger': (!form.controls['title'].valid && !form.controls['title'].pristine) }"
+      pTooltip="Nome do Produto" tooltipPosition="top"/>
   </div>
   <div class="ml-3">
-    <span class="font-bold block mb-2">Quantidade</span>
-    <p-inputNumber [size]="5" class="mr-2" formControlName="quantity" id="productQuantity" inputId="integeronly"
-      [ngClass]="{'uk-form-danger': (!form.controls['quantity'].valid && !form.controls['quantity'].pristine) }"></p-inputNumber>
+    <span class="font-bold block mb-2 truncate" pTooltip="Quantidade" tooltipPosition="top">Quantidade</span>
+    <p-inputNumber [size]="5" class="mr-2 truncate" formControlName="quantity" id="productQuantity" inputId="integeronly"
+      [ngClass]="{'uk-form-danger': (!form.controls['quantity'].valid && !form.controls['quantity'].pristine) }"
+      pTooltip="Quantidade" tooltipPosition="top"></p-inputNumber>
   </div>
   <div class="ml-3">
-    <span class="font-bold block mb-2">Quantidade mínima</span>
-    <p-inputNumber [size]="5" class="mr-2" formControlName="min_quantity" id="productMinQuantity" inputId="integeronly"
-      [ngClass]="{'uk-form-danger': (!form.controls['min_quantity'].valid && !form.controls['min_quantity'].pristine) }"></p-inputNumber>
+    <span class="font-bold block mb-2 truncate" pTooltip="Quantidade mínima" tooltipPosition="top">Quantidade mínima</span>
+    <p-inputNumber [size]="5" class="mr-2 truncate" formControlName="min_quantity" id="productMinQuantity" inputId="integeronly"
+      [ngClass]="{'uk-form-danger': (!form.controls['min_quantity'].valid && !form.controls['min_quantity'].pristine) }"
+      pTooltip="Quantidade mínima" tooltipPosition="top"></p-inputNumber>
   </div>
   <div class="ml-3">
-    <span class="font-bold block mb-2">Valor de compra</span>
-    <p-inputNumber [size]="4" class="mr-2" formControlName="purchasePrice" inputId="currency-us" mode="currency"
+    <span class="font-bold block mb-2 truncate" pTooltip="Custo" tooltipPosition="top">Valor de compra</span>
+    <p-inputNumber [size]="4" class="mr-2 truncate" formControlName="purchasePrice" inputId="currency-us" mode="currency"
       currency="BRL" locale="pt" id="productPurchasePrice"
-      [ngClass]="{'uk-form-danger': (!form.controls['purchasePrice'].valid && !form.controls['purchasePrice'].pristine) }"></p-inputNumber>
+      [ngClass]="{'uk-form-danger': (!form.controls['purchasePrice'].valid && !form.controls['purchasePrice'].pristine) }"
+      pTooltip="Valor de compra" tooltipPosition="top"></p-inputNumber>
   </div>
   <div class="ml-3">
-    <span class="font-bold block mb-2">Valor de venda</span>
-    <p-inputNumber [size]="4" class="mr-2" formControlName="price" inputId="currency-us" mode="currency" currency="BRL"
+    <span class="font-bold block mb-2 truncate" pTooltip="Valor de venda" tooltipPosition="top">Valor de venda</span>
+    <p-inputNumber [size]="4" class="mr-2 truncate" formControlName="price" inputId="currency-us" mode="currency" currency="BRL"
       locale="pt" id="productPrice"
-      [ngClass]="{'uk-form-danger': (!form.controls['price'].valid && !form.controls['price'].pristine) }"></p-inputNumber>
+      [ngClass]="{'uk-form-danger': (!form.controls['price'].valid && !form.controls['price'].pristine) }"
+      pTooltip="Valor de venda" tooltipPosition="top"></p-inputNumber>
   </div>
   <div class="ml-3">
-    <span class="font-bold block mb-2">Ação</span>
+    <span class="font-bold block mb-2 truncate" pTooltip="Ação" tooltipPosition="top">Ação</span>
     <div class="actions-container">
       <p-button class="mr-2" icon="pi pi-check" label="Salvar" (click)="submit()" *ngIf="!busy"></p-button>
       <p-button class="p-button-danger" label="Cancelar" icon="pi pi-times" (click)="resetForm();"
@@ -36,4 +41,3 @@
     </div>
   </div>
 </div>
-

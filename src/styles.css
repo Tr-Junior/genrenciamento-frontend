@@ -1,5 +1,15 @@
 @import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
 
+
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  background-color: #b3dbe9;
+}
+
 .outofstock {
   font-weight: 700;
   color: #ff5252;
@@ -32,9 +42,6 @@
 .custom-menu .p-menuitem-text {
   font-size: 12px; /* ajuste o tamanho conforme necessário */
 }
-body {
-  background-color: #b3dbe9; /* Azul claro */
-}
 
 .p-datatable .p-datatable-tbody > tr > td {
   text-align: left;
@@ -66,4 +73,16 @@ body {
 
 .p-menubar {
   padding: 0rem 0.5rem !important;
+}
+
+/* Esconder parte do texto em telas menores que 1024px */
+@media (max-width: 1024px) {
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px; /* Ajuste conforme necessário */
+    display: inline-block;
+    vertical-align: middle;
+  }
 }

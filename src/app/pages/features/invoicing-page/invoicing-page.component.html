@@ -41,7 +41,8 @@
         <td>{{ entrances.value | currency }}</td>
         <td>{{ entrances.createDate | date:"dd/MM/yyyy HH:mm" }}</td>
         <td>
-          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
+          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined" pTooltip="Remover"
+          tooltipPosition="top" [swal]="{
               title: 'Atenção',
               background: '#737373',
               width: 300,

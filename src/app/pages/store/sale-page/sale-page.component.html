@@ -13,8 +13,8 @@
         </div>
         <div class="flex align-items-center font-bold border-round">
           <!-- Botão completo visível em telas maiores que 450px -->
-          <p-button icon="pi pi-times" label="Limpar Carrinho" class="btn-full" styleClass="p-button-rounded p-button-danger p-button-text"
-            (click)="clear()"></p-button>
+          <p-button icon="pi pi-times" label="Limpar caixa" class="btn-full" styleClass="p-button-rounded p-button-danger p-button-text"
+            (click)="clear()"  pTooltip="Limpar caixa"></p-button>
           <!-- Botão com ícone apenas visível em telas menores que 450px -->
           <p-button icon="pi pi-trash" class="btn-icon-only" styleClass="p-button-rounded p-button-danger p-button-text "
             (click)="clear()"></p-button>
@@ -26,11 +26,10 @@
             <th style="text-align: center" scope="col">Produto</th>
             <th style="text-align: center" scope="col">Estoque</th>
             <th style="text-align: center" scope="col">Valor</th>
-            <th style="text-align: center" scope="col">Ação</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
-          <tr>
+          <tr (click)="addToCart(product)" style="cursor: pointer;">
             <td class="p-0" style="text-align: center">{{product.title}}</td>
             <td style="text-align: center">
               <div
@@ -40,22 +39,22 @@
               </div>
             </td>
             <td style="text-align: center">{{product.price | currency}}</td>
-            <td style="text-align: center"><p-button icon="pi pi-cart-plus" styleClass="p-button-rounded p-button-success p-button-outlined"
-                (click)="addToCart(product)"></p-button>
-            </td>
+              <!-- <p-button icon="pi pi-cart-plus" styleClass="p-button-rounded p-button-success p-button-outlined"
+                (click)="addToCart(product)"></p-button> -->
+
           </tr>
         </ng-template>
       </p-table>
     </div>
   <div class="card">
-    <p-table [value]="cartItems" styleClass="p-datatable-striped" class="p-1">
+    <p-table [value]="cartItems" styleClass="p-datatable-striped"  class="p-1">
       <ng-template pTemplate="header">
         <tr>
           <th scope="col">Produto</th>
           <th style="text-align: center" scope="col">Quantidade</th>
           <th style="text-align: center" scope="col">Valor unitário</th>
           <th style="text-align: center" scope="col">Valor Total</th>
-          <th style="text-align: center" scope="col">Ação</th>
+          <th style="text-align: center" scope="col">Opção</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-item let-index=i>
@@ -63,14 +62,17 @@
           <td class="p-1" style="text-align: center">{{item.title}}</td>
           <td class="p-1" style="text-align: center">
             <div class="flex-initial flex align-items-center justify-content-center">
-              <p-inputNumber styleClass="width: 2rem" [size]="1" [(ngModel)]="item.quantity" (ngModelChange)="updateQuantity($event, item)"></p-inputNumber>
+              <p-inputNumber styleClass=" p-inputtext-sm" [size]="1" [(ngModel)]="item.quantity" (ngModelChange)="updateQuantity($event, item)"></p-inputNumber>
           </div>
           </td>
           <td class="p-1" style="text-align: center">{{item.price | currency}}</td>
           <td class="p-1" style="text-align: center">{{(item.price * item.quantity) | currency}}</td>
           <td class="p-1" style="text-align: center">
-            <p-button icon=" pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text"
-              (click)="remove(item)"></p-button>
+            <p-button icon="pi pi-trash"
+            styleClass="p-button-rounded p-button-danger p-button-text"
+            (click)="remove(item)"
+            pTooltip="Remover item"
+            tooltipPosition="top"></p-button>
           </td>
         </tr>
       </ng-template>
@@ -87,33 +89,47 @@
     <br>
   </div>
 </div>
+
 <div class="col-12 p-0">
   <div class="card px-2 pt-2">
     <div class="p-fluid p-formgrid grid p-0">
       <!-- Primeira linha: Forma de Pagamento e Desconto -->
-      <div class=" col-12 md:col-3">
-        <span class="text-xl">Forma de Pagamento</span>
+      <div class="col-12 md:col-2">
+        <span class="text-base truncate" pTooltip="Forma de Pagamento" tooltipPosition="top">Forma de Pagamento</span>
         <div class="mt-2">
-        <p-dropdown styleClass="ng-dirty ng-invalid w-full" placeholder="Selecione" [options]="formPaymentOptions"
-          [(ngModel)]="selectedPayment" optionLabel="label" optionValue="value"
-          (onChange)="onFormPaymentSelected($event.value)">
-        </p-dropdown>
+          <p-dropdown
+            styleClass="ng-dirty ng-invalid w-full"
+            placeholder="Selecione"
+            [options]="formPaymentOptions"
+            [(ngModel)]="selectedPayment"
+            optionLabel="label"
+            optionValue="value"
+            (onChange)="onFormPaymentSelected($event.value)">
+          </p-dropdown>
+        </div>
       </div>
-      </div>
-      <div class=" col-12 md:col-2">
-        <span class="text-xl">Desconto</span>
-        <p-inputNumber class="mt-2 desconto" [(ngModel)]="generalDiscount" (onInput)="updateGeneralDiscount(generalDiscount)"
-          placeholder="Discount" inputId="percent" prefix="%" value="0" styleClass="w-full">
+
+      <div class="col-12 md:col-2">
+        <span class="text-base truncate" pTooltip="Desconto" tooltipPosition="top">Desconto</span>
+        <p-inputNumber class="mt-2 desconto"
+                       [(ngModel)]="generalDiscount"
+                       (onInput)="updateGeneralDiscount(generalDiscount)"
+                       placeholder="Discount"
+                       inputId="percent"
+                       prefix="%"
+                       value="0"
+                       styleClass="w-full">
         </p-inputNumber>
       </div>
-      <div class="md:col-4"></div>
+
+      <div class="md:col-4 mr-6"></div>
       <!-- Segunda linha: Subtotal e Valor Total -->
-      <div class=" col-12 md:col-1">
-        <span class="text-xl total">Subtotal:</span>
-        <div class="text-xl font-bold pt-3 total">{{ subtotal | currency }}</div>
+      <div class=" col-12 md:col-1 mr-5">
+        <span class="text-base total">Subtotal:</span>
+        <div class="text-lg font-bold pt-3 total">{{ subtotal | currency }}</div>
       </div>
       <div class=" col-12 md:col-2">
-        <span class="text-xl">Valor Total:</span>
+        <span class="text-base">Valor Total:</span>
         <div class="flex align-items-center ">
           <p-inputNumber class="mt-2" [(ngModel)]="grandTotal" placeholder="Valor Total" mode="currency" currency="BRL" styleClass="w-full">
           </p-inputNumber>
@@ -122,15 +138,15 @@
 
       <!-- Terceira linha: Valor Recebido e Valor do Troco -->
       <div class=" col-12 md:col-2">
-        <span class="text-xl">Valor Recebido:</span>
+        <span class="text-base">Valor Recebido:</span>
         <p-inputNumber class="pt-2" [size]="12" id="value" inputId="integeronly" [(ngModel)]="total"
             (onInput)="calcTroco()" mode="currency" currency="BRL" styleClass="w-full">
         </p-inputNumber>
       </div>
 
       <div class=" col-12 md:col-7">
-        <span class="text-xl">Valor do Troco:</span>
-        <div class="text-white-950 font-bold text-xl pt-3">{{ totalTroco | currency }}</div>
+        <span class="text-base">Valor do Troco:</span>
+        <div class="text-white-950 font-bold text-lg pt-3">{{ totalTroco | currency }}</div>
       </div>
 
       <!-- Quarta linha: Botão Finalizar Venda -->
@@ -147,18 +163,18 @@
           icon: 'warning'
         }" (confirm)="submitOrder()"></p-button>
       </div>
-
+      <div class="col-12 md:col-3 text-center md:text-left">
+        <p-autoComplete [(ngModel)]="customerName" [suggestions]="filteredCustomers"
+                        (completeMethod)="filterCustomer($event)"
+                        [dropdown]="true" placeholder="Nome do Cliente"></p-autoComplete>
+      </div>
+      <div class="col-12 md:col-3 text-center md:text-left btn2">
+        <p-button class="button" icon="pi pi-id-card" iconPos="right" label="Salvar orçamento" (click)="createBudget()"></p-button>
+      </div>
 
       <div class="col-12 md:col-2 text-center md:text-left btn">
         <p-button class="pdf" icon="pi pi-file-pdf" iconPos="right" label="Gerar PDF" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></p-button>
       </div>
-      <div class="col-12 md:col-3 text-center md:text-left">
-        <input pInputText type="text" [(ngModel)]="customerName" placeholder="Nome do Cliente" />
-      </div>
-      <div class="col-12 md:col-3 text-center md:text-left btn2">
-        <p-button class="button"  icon="pi pi-id-card" iconPos="right" label="Salvar orçamento" (click)="createBudget()"></p-button>
-      </div>
-
     </div>
   </div>
 </div>

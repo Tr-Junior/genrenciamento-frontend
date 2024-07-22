@@ -12,6 +12,7 @@ import jsPDF, { RGBAData } from 'jspdf';
 import { ElementRef, ViewChild } from '@angular/core';
 import autoTable from 'jspdf-autotable';
 import { getLocaleDateTimeFormat } from '@angular/common';
+import { Budget } from 'src/app/models/budget-model';
 
 
 @Component({
@@ -40,8 +41,9 @@ export class SalePageComponent {
   public total = 0;
   public totalTroco = 0;
   public quotes: Cart[] = [];
-  public customerName: string = '';  // Adicionado
-
+  public customerName: string = '';  // Adiciona
+  public filteredCustomers: string[] = [];
+  public customerNames: string[] = [];
 
   constructor(
     private toastr: ToastrService,
@@ -62,6 +64,7 @@ export class SalePageComponent {
     this.listProdSilent();
     this.user = Security.getUser();
     this.calculateTotal(); // Carregar orçamentos salvos na inicialização
+    this.loadCustomerNames();
   }
 
   loadCart() {
@@ -249,6 +252,24 @@ export class SalePageComponent {
   }
 
 // cria orçamentos
+filterCustomer(event: any) {
+  const query = event.query.toLowerCase();
+  this.filteredCustomers = this.customerNames.filter(customer => customer.toLowerCase().includes(query));
+}
+
+loadCustomerNames() {
+  this.service.getBudget().subscribe({
+    next: (data: Budget[]) => {
+      this.customerNames = data.map(budget => budget.client);
+    },
+    error: (err: any) => {
+      console.log(err);
+      this.toastr.error(err.message);
+    }
+  });
+}
+
+
 createBudget() {
   if (this.cartItems.length === 0) {
     this.toastr.error('O carrinho está vazio', 'Erro');
@@ -260,9 +281,8 @@ createBudget() {
     return;
   }
 
-  // Cria um objeto contendo as informações do cliente e dos itens do carrinho
   const budget = {
-    client: this.customerName,  // Usar customerName diretamente
+    client: this.customerName,
     budget: {
       items: this.cartItems.map(item => {
         return {
@@ -273,7 +293,7 @@ createBudget() {
           product: item._id
         };
       }),
-      total: this.grandTotal
+      total: this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
     }
   };
 
@@ -282,21 +302,16 @@ createBudget() {
     next: (data: any) => {
       this.busy = false;
       this.toastr.success(data.message);
-      CartUtil.clear(); // Limpa o carrinho após a conclusão da compra
+      CartUtil.clear();
       this.loadCart();
     },
     error: (err: any) => {
       console.log(err);
       this.busy = false;
-      this.toastr.error(err.message);  // Corrigir para toastr.error
+      this.toastr.error(err.message);
     }
   });
-  this.clearPaymentMethod();
-  this.loadCart();
-  this.clearTroco();
-  this.customerName = '';
 }
-
 
 
   clearPaymentMethod(): void {

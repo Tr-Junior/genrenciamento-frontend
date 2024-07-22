@@ -3,9 +3,8 @@
       <p-menubar [model]="items" class="mr-2 custom-menu">
           <ng-template pTemplate="start">
               <img class="p-0" src="assets/image/logo.png" height="60"/>
-              <p-button style="margin-botom: 1.5rem" label="{{ user.name }}" styleClass="p-button-link text-2xl mb-2" class="" (click)="userOverlay.toggle($event)"></p-button>
+              <p-button label="{{ capitalizeFirstLetter(user.name) }}" styleClass="p-button-link text-2xl mb-3 " (click)="userOverlay.toggle($event)"></p-button>
               <p-overlayPanel #userOverlay [dismissable]="true"><div class="full-height flex align-items-center justify-content-center">
-                <p-button label="{{ user.name }}" styleClass="p-button-link text-2xl mb-2" (click)="userOverlay.toggle($event)"></p-button>
             </div>
 
                   <p-menu styleClass="" [model]="userItems"></p-menu>

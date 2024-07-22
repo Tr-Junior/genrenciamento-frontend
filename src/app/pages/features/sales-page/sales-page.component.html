@@ -17,8 +17,8 @@
       <button pButton type="button" label="Pesquisar" icon="pi pi-search" (click)="listOrders()"></button>
       <span class="px-2"></span>
       <button pButton type="button" label="Limpar" icon="pi pi-times" (click)="clearSearch()"></button>
+      <button class="ml-4" pButton type="button" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)">Gerar relatório</button>
     </span>
-    <button class="ml-4" pButton type="button" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)">Gerar relatório</button>
   </div>
 
   <app-loading style="text-align: center" *ngIf="busy"></app-loading>
@@ -30,17 +30,17 @@
       <tr pTableToggler>
         <th></th>
         <th pSortableColumn="number">
-          Numero da Venda <p-sortIcon field="number"></p-sortIcon>
+          Venda <p-sortIcon field="number"></p-sortIcon>
         </th>
         <th pSortableColumn="createDate">
-          Data da Venda <p-sortIcon field="createDate"></p-sortIcon>
+          Data  <p-sortIcon field="createDate"></p-sortIcon>
         </th>
         <th pSortableColumn="customer">Vendedor<p-sortIcon field="customer"></p-sortIcon></th>
         <th pSortableColumn="formPayment">
-          Forma de Pagamento <p-sortIcon field="formPayment"></p-sortIcon>
+          Pagamento <p-sortIcon field="formPayment"></p-sortIcon>
         </th>
         <th pSortableColumn="total">
-          Valor total <p-sortIcon field="total"></p-sortIcon>
+          Total <p-sortIcon field="total"></p-sortIcon>
         </th>
         <th>Ação</th>
       </tr>
@@ -58,7 +58,8 @@
         <td>{{ order.sale.formPayment }}</td>
         <td>{{ order.sale.total | currency }}</td>
         <td>
-          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
+          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined" pTooltip="Remover venda"
+          tooltipPosition="top" [swal]="{
                   title: 'Atenção',
                   background: '#737373',
                   width: 300,
@@ -79,10 +80,10 @@
             <ng-template pTemplate="header">
               <tr>
                 <th pSortableColumn="title">
-                  Produto <p-sortIcon field="title"></p-sortIcon>
+                  Produto
                 </th>
                 <th pSortableColumn="date">
-                  Quantidade <p-sortIcon field="date"></p-sortIcon>
+                  Quantidade
                 </th>
                 <th>Valor Unitário</th>
                 <th>Valor Total</th>

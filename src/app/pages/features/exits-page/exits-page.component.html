@@ -140,16 +140,20 @@
         <td style="text-align: center">
           <div class="flex align-items-center justify-content-center gap-3">
             <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-              (click)="onRowEditInit(exits)" class="p-button-rounded p-button-warning p-button-outlined">
+              (click)="onRowEditInit(exits)" class="p-button-rounded p-button-warning p-button-outlined" pTooltip="Editar saida"
+              tooltipPosition="top">
             </button>
             <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-              (click)="onRowEditSave(exits)" class="p-button-rounded p-button-text p-button-success mr-2">
+              (click)="onRowEditSave(exits)" class="p-button-rounded p-button-text p-button-success mr-2" pTooltip="Salvar"
+              tooltipPosition="top">
             </button>
             <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-              (click)="onRowEditCancel(exits)" class="p-button-rounded p-button-text p-button-danger">
+              (click)="onRowEditCancel(exits)" class="p-button-rounded p-button-text p-button-danger" pTooltip="Cancelar"
+              tooltipPosition="top">
             </button>
             <p-button *ngIf="!editing" icon="pi pi-trash"
-              styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
+              styleClass="p-button-rounded p-button-danger p-button-outlined" pTooltip="Remover saida"
+              tooltipPosition="top" [swal]="{
             title: 'atenção',
             background: '#737373',
             width: 300,

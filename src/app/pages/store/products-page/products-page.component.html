@@ -23,25 +23,38 @@
             [disabled]="!searchQuery"></p-button>
         </div>
         <div class="show-on-small">
-          <button pButton type="button" icon="pi pi-plus" (click)="openModal()"></button>
+          <button pButton type="button" icon="pi pi-plus" (click)="openModal()"  pTooltip="Novo produto"
+            tooltipPosition="top"></button>
         </div>
         <button pButton type="button" icon="pi pi-file-excel" class="export-button p-button-success"
-          (click)="exportToExcel()"></button>
+          (click)="exportToExcel()"  pTooltip="Exportar para excel"></button>
         <p-button icon="pi pi-file-excel" styleClass="p-button-success" class="pl-2 export-icon"
-          (click)="exportToExcel()"></p-button>
+                    pTooltip="Exportar para excel"
+          (click)="exportToExcel()" ></p-button>
       </div>
 
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th style="text-align: center">#</th>
-        <th style="text-align: center">Nome</th>
-        <th style="text-align: center">Estoque</th>
-        <th style="text-align: center">Estoque minimo</th>
-        <th style="text-align: center">Valor de compra</th>
-        <th style="text-align: center">Valor de venda</th>
-        <th style="text-align: center">Ações</th>
+        <th style="text-align: center">
+          <span class="truncate" pTooltip="Produto" tooltipPosition="top">Produto</span>
+        </th>
+        <th style="text-align: center">
+          <span class="truncate" pTooltip="Estoque" tooltipPosition="top">Estoque</span>
+        </th>
+        <th style="text-align: center">
+          <span class="truncate" pTooltip="Estoque mínimo" tooltipPosition="top">Estoque mínimo</span>
+        </th>
+        <th style="text-align: center">
+          <span class="truncate" pTooltip="Custo" tooltipPosition="top">Custo</span>
+        </th>
+        <th style="text-align: center">
+          <span class="truncate" pTooltip="Valor de venda" tooltipPosition="top">Valor de venda</span>
+        </th>
+        <th style="text-align: center">Opções</th>
       </tr>
+
     </ng-template>
     <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
       <tr [pEditableRow]="product" [attr.id]="'productRow_' + product._id">
@@ -61,7 +74,7 @@
         <td style="text-align: center">
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input size="6" pInputText type="text" pKeyFilter="num" id="number"
+              <input size="3" pInputText type="text" pKeyFilter="num" id="number"
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57" [(ngModel)]="selectedProduct.quantity"
                 required>
             </ng-template>
@@ -77,7 +90,7 @@
         <td style="text-align: center">
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input size="6" pInputText type="text" pKeyFilter="num" id="number"
+              <input size="3" pInputText type="text" pKeyFilter="num" id="number"
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                 [(ngModel)]="selectedProduct.min_quantity" required>
             </ng-template>
@@ -112,32 +125,76 @@
         </td>
         <td style="text-align: center">
           <div class="flex align-items-center justify-content-center gap-3">
-            <p-button *ngIf="!editing" icon="pi pi-cart-plus"
-              styleClass="p-button-rounded p-button-success p-button-outlined" (click)="addToCart(product)">
+            <!-- Botão Adicionar ao Carrinho -->
+            <p-button *ngIf="!editing"
+                      icon="pi pi-cart-plus"
+                      styleClass="p-button-rounded p-button-success p-button-outlined"
+                      pTooltip="Adicionar ao carrinho"
+                      tooltipPosition="top"
+                      (click)="addToCart(product)">
             </p-button>
-            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-              (click)="onRowEditInit(product)" class="p-button-rounded p-button-warning p-button-outlined">
+
+            <!-- Botão Editar -->
+            <button *ngIf="!editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pInitEditableRow
+                    icon="pi pi-pencil"
+                    pTooltip="Editar item"
+                    tooltipPosition="top"
+                    (click)="onRowEditInit(product)"
+                    class="p-button-rounded p-button-warning p-button-outlined">
             </button>
-            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-              (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success mr-2">
+
+            <!-- Botão Salvar -->
+            <button *ngIf="editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pSaveEditableRow
+                    icon="pi pi-check"
+                    pTooltip="Salvar alterações"
+                    tooltipPosition="top"
+                    (click)="onRowEditSave(product)"
+                    class="p-button-rounded p-button-text p-button-success mr-2">
             </button>
-            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-              (click)="onRowEditCancel(product)" class="p-button-rounded p-button-text p-button-danger">
+
+            <!-- Botão Cancelar -->
+            <button *ngIf="editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pCancelEditableRow
+                    icon="pi pi-times"
+                    pTooltip="Cancelar edição"
+                    tooltipPosition="top"
+                    (click)="onRowEditCancel(product)"
+                    class="p-button-rounded p-button-text p-button-danger">
             </button>
-            <p-button *ngIf="!editing" icon="pi pi-trash"
-              styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
-            title: 'atenção',
-            background: '#737373',
-            width: 300,
-            color:'#fff',
-            text: 'Deseja realmente excluir o produto: '+ product.title + '?',
-            showDenyButton: true,
-            denyButtonText: 'Não',
-            confirmButtonText: 'Sim',
-            icon: 'warning'
-        }" (confirm)="delete(product._id)"></p-button>
+
+            <!-- Botão Excluir -->
+            <p-button *ngIf="!editing"
+                      icon="pi pi-trash"
+                      styleClass="p-button-rounded p-button-danger p-button-outlined"
+                      pTooltip="Excluir item"
+                      tooltipPosition="top"
+                      [swal]="{
+                        title: 'atenção',
+                        background: '#737373',
+                        width: 300,
+                        color:'#fff',
+                        text: 'Deseja realmente excluir o produto: '+ product.title + '?',
+                        showDenyButton: true,
+                        denyButtonText: 'Não',
+                        confirmButtonText: 'Sim',
+                        icon: 'warning'
+                      }"
+                      (confirm)="delete(product._id)">
+            </p-button>
           </div>
         </td>
+
       </tr>
     </ng-template>
   </p-table>

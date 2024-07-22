@@ -3,6 +3,29 @@
   display: none;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.horizontal-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #a72929; /* Cor da linha */
+  margin: 1rem 0; /* Espaçamento entre os botões e a linha */
+}
+
+/* Estilo para truncar o texto e mostrar a dica */
+.truncate {
+  display: inline-block;
+  max-width: 150px; /* Ajuste conforme necessário */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
 
 @media (max-width: 450px) {
   .btn-full {
