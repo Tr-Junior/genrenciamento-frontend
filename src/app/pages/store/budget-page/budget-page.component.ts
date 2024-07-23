@@ -119,7 +119,7 @@ export class BudgetPageComponent implements OnInit {
   }
 
   logo = 'assets/image/logo2.png'; // Adicione aqui a string base64 da sua imagem
-  nome = 'Conexão elétrica e hidráulica';
+  nome = 'Manancial';
   endereco = 'Qd 33 Conj "B" N° 01-A setor 2  -  Águas Lindas de Goiás';
   telefone = '(61) 99571-0019';
   cnpj = '52.068.148/0001-61';

@@ -12,6 +12,7 @@ import { Security } from 'src/app/utils/Security.util';
 import { User } from 'src/app/models/user.model';
 import * as XLSX from 'xlsx';
 import { LowStockNotificationService } from 'src/app/services/low-stok-notification.service';
+import { ComunicacaoService } from 'src/app/services/comunicacao.service';
 
 
 @Component({
@@ -36,8 +37,7 @@ export class ProductsPageComponent implements OnInit {
   public updating: boolean = false;
   public searchQuery: string = '';
   totalPurchaseValue: number = 0;
-  displayModal: boolean = false;
-
+  public displayModal: boolean = false;
 
   constructor(
     private messageService: MessageService,
@@ -46,7 +46,8 @@ export class ProductsPageComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private lowStockNotificationService: LowStockNotificationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private comunicacaoService: ComunicacaoService
   ) {
 
     this.form = this.fb.group({
@@ -72,6 +73,10 @@ export class ProductsPageComponent implements OnInit {
   ngOnInit() {
     this.listProd();
     this.user = Security.getUser();
+    this.comunicacaoService.produtoSalvo$.subscribe(() => {
+      this.fecharModal();
+      this.listProd();
+    });
   }
 
 
@@ -79,7 +84,7 @@ export class ProductsPageComponent implements OnInit {
     this.displayModal = true;
   }
 
-  closeModal() {
+  fecharModal() {
     this.displayModal = false;
   }
 
@@ -98,27 +103,6 @@ export class ProductsPageComponent implements OnInit {
         })
   }
 
-
-
-  // submit() {
-  //   this.busy = true;
-  //   this
-  //     .service
-  //     .createProduct(this.form.value)
-  //     .subscribe({
-  //       next: (data: any) => {
-  //         this.busy = false;
-  //         this.toastr.success(data.message, 'Produto cadastrado');
-  //         this.resetForm();
-  //       },
-  //       error: (err: any) => {
-  //         this.toastr.error(err.message);
-  //         this.busy = false;
-  //       }
-  //     }
-
-  //     );
-  // }
 
   delete(id: any) {
     this

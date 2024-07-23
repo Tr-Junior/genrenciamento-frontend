@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Product } from 'src/app/models/product.model';
+import { ComunicacaoService } from 'src/app/services/comunicacao.service';
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -31,6 +32,7 @@ export class ProducRegistrationPageComponent {
     private service: DataService,
     private router: Router,
     private fb: FormBuilder,
+    private comunicacaoService: ComunicacaoService,
     private toastr: ToastrService
   ) {
 
@@ -88,7 +90,7 @@ export class ProducRegistrationPageComponent {
           this.toastr.success(data.message);
           this.resetForm();
           this.listProd();
-          console.log();
+          this.comunicacaoService.notificarProdutoSalvo();
           this.fecharModal();
         },
         error: (err: any) => {

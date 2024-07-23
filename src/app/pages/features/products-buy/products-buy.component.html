@@ -1,6 +1,6 @@
 <app-loading style="text-align: center" *ngIf="busy"></app-loading>
-<form [formGroup]="form" class="card form-container py-2 mt-1" (keydown.enter)="submit()">
-  <div class="form-item">
+<form [formGroup]="form" class="card form-container py-2 mt-1 p-fluid p-formgrid grid p-0 col-12" (keydown.enter)="submit()">
+  <div class="col-12 md:col-5">
     <span class="font-bold block mb-2">Nome do Produto</span>
     <input class="w-full" pInputText id="product" formControlName="title"
       [ngClass]="{'uk-form-danger': (!form.controls['title'].valid && !form.controls['title'].pristine) }" />
@@ -10,15 +10,15 @@
     <p-dropdown [options]="status" formControlName="status" id="status" inputId="statusDropdown"
       [ngClass]="{'uk-form-danger': (!form.controls['status'].valid && !form.controls['status'].pristine) }"></p-dropdown>
   </div> -->
-  <div class="form-actions">
+  <div class="col-12 md:col-2">
     <span class="font-bold block mb-2">Ação</span>
-    <div class="actions-container">
-      <p-button class="" icon="pi pi-check" label="Salvar" (click)="submit()" *ngIf="!busy"></p-button>
-      <p-button class="p-button-danger" label="Cancelar" icon="pi pi-times" (click)="resetForm();"
-        styleClass="p-button-danger"></p-button>
+    <div class="actions-container" style="display: flex;">
+      <p-button icon="pi pi-check" label="Salvar" (click)="submit()" *ngIf="!busy" style="margin-right: 10px;"></p-button>
+      <p-button class="p-button-danger" label="Cancelar" icon="pi pi-times" (click)="resetForm();" styleClass="p-button-danger"></p-button>
     </div>
   </div>
 </form>
+
 
 
 <div class="card pt-1 pb-1 mb-0">

@@ -58,6 +58,7 @@ import { LoginModalComponent } from './pages/account/login-sales/login-sales.com
 import { ProductsBuyComponent } from './pages/features/products-buy/products-buy.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TooltipModule } from 'primeng/tooltip';
+import { ComunicacaoService } from './services/comunicacao.service';
 
 registerLocaleData(ptBR);
 
@@ -135,7 +136,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     TooltipModule,
     MenubarModule
   ],
-  providers: [DataService, AuthService, LowStockNotificationService, ConfirmationService, MessageService, DatePipe,
+  providers: [ComunicacaoService ,DataService, AuthService, LowStockNotificationService, ConfirmationService, MessageService, DatePipe,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }

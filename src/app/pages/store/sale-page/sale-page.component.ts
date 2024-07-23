@@ -304,6 +304,7 @@ createBudget() {
       this.toastr.success(data.message);
       CartUtil.clear();
       this.loadCart();
+      this.customerName = ''; // Limpar o campo de nome do cliente aqui
     },
     error: (err: any) => {
       console.log(err);

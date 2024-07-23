@@ -1,0 +1,15 @@
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+}
+
+.form-container .col-12 {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions-container {
+  display: flex;
+  align-items: center;
+}
