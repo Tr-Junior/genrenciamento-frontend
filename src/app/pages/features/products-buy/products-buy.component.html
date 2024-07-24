@@ -2,7 +2,8 @@
 <form [formGroup]="form" class="card form-container py-2 mt-1 p-fluid p-formgrid grid p-0 col-12" (keydown.enter)="submit()">
   <div class="col-12 md:col-5">
     <span class="font-bold block mb-2">Nome do Produto</span>
-    <input class="w-full" pInputText id="product" formControlName="title"
+    <input class="w-full" pTooltip="Nome do produto"
+    tooltipPosition="top" pInputText id="product" formControlName="title"
       [ngClass]="{'uk-form-danger': (!form.controls['title'].valid && !form.controls['title'].pristine) }" />
   </div>
   <!-- <div class="form-item">
@@ -35,7 +36,7 @@
   <p-table [value]="productsBuy" selectionMode="multiple" [(selection)]="selectedProducts" [metaKeySelection]="metaKeySelection" dataKey="_id" editMode="row" [scrollable]="true"
   scrollHeight="460px" class="responsive-table" [globalFilterFields]="['title']">
     <ng-template pTemplate="header">
-      <tr>
+      <tr >
         <th style="width:25%"> Produto
         </th>
         <th  style="width:10%">Status
@@ -48,22 +49,17 @@
         <td>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="product.title" required />
+              <input pInputText [(ngModel)]="product.title" />
             </ng-template>
             <ng-template pTemplate="output">
-              {{ product.title }}
+              {{product.title}}
             </ng-template>
           </p-cellEditor>
         </td>
-        <td [pEditableColumn]="true" pEditableColumnField="status">
+        <td>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <div>
-                <p-dropdown [options]="status" [(ngModel)]="product.status" placeholder="Selecione" [editable]="true"
-                  optionLabel="label" optionValue="value" (keydown.enter)="onEdit($event, product)" appendTo="body"
-                  styleClass="custom-dropdown">
-                </p-dropdown>
-              </div>
+              <p-dropdown [options]="status" appendTo="body" [(ngModel)]="product.status" [style]="{'width':'100%'}"></p-dropdown>
             </ng-template>
             <ng-template pTemplate="output">
               <div [ngClass]="{
@@ -77,16 +73,20 @@
         </td>
         <td style="text-align: center">
           <div class="flex align-items-center justify-content-center gap-2">
-            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+            <button *ngIf="!editing" pButton pRipple type="button" pTooltip="Editar item"
+            tooltipPosition="top" pInitEditableRow icon="pi pi-pencil"
               (click)="onRowEditInit(product)" class="p-button-rounded p-button-warning p-button-outlined">
             </button>
-            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+            <button *ngIf="editing" pButton pRipple type="button" pTooltip="Salvar"
+            tooltipPosition="top" pSaveEditableRow icon="pi pi-check"
               (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success mr-2">
             </button>
-            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+            <button *ngIf="editing" pButton pRipple type="button" pTooltip="Cancelar"
+            tooltipPosition="top" pCancelEditableRow icon="pi pi-times"
               (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger">
             </button>
-            <p-button *ngIf="!editing" icon="pi pi-trash"
+            <p-button *ngIf="!editing" icon="pi pi-trash" pTooltip="Excluir item"
+                    tooltipPosition="top"
               styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
               title: 'atenção',
               background: '#737373',

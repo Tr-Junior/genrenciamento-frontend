@@ -57,7 +57,7 @@
 
     </ng-template>
     <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
-      <tr [pEditableRow]="product" [attr.id]="'productRow_' + product._id">
+      <tr [pEditableRow]="product" [attr.id]="'productRow_' + product._id" >
         <td style="text-align: center">
           {{ri+1}}
         </td>
