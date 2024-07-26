@@ -1,25 +1,23 @@
-<div [formGroup]="form" class="card">
-  <div class="formgroup-inline">
-    <div class="field">
-      <span class="font-bold block mb-2">Nome da despesa</span>
-      <label htmlFor="lastname1" class="p-sr-only">Nome da despesa</label>
-      <input formControlName="description" pInputText type="text" [ngClass]="{
+<div [formGroup]="form" class="card col-12">
+  <div class="formgroup-inline p-fluid p-formgrid grid p-0">
+    <div class="col-12 md:col-3">
+      <span class="font-bold block mb-2" pTooltip="Nome da despesa" tooltipPosition="top">Nome da despesa</span>
+      <input formControlName="description" pInputText ition="top" type="text" [ngClass]="{
           danger:
             !form.controls['description'].valid &&
             !form.controls['description'].pristine
         }" />
     </div>
-    <div class="field">
-      <span class="font-bold block mb-2">Valor da despesa</span>
-      <label htmlFor="firstname1" class="p-sr-only">Firstname</label>
-      <p-inputNumber formControlName="value" mode="currency" currency="BRL" id="productPurchasePrice" [ngClass]="{
+    <div class="col-12 md:col-2">
+      <span class="font-bold block mb-2" pTooltip="Valor da despesa" tooltipPosition="top">Valor da despesa</span>
+      <p-inputNumber formControlName="value" mode="currency"  currency="BRL" id="productPurchasePrice" [ngClass]="{
           danger:
             !form.controls['value'].valid && !form.controls['value'].pristine
         }">
       </p-inputNumber>
     </div>
-    <div class="field">
-      <span class="font-bold block mb-2">Forma de Pagamento</span>
+    <div class="col-12 md:col-2">
+      <span class="text-base mb-2 truncate" pTooltip="Forma de Pagamento" tooltipPosition="top">Forma de Pagamento</span>
       <p-dropdown formControlName="formPaymentExit" styleClass="ng-dirty ng-invalid" placeholder="Selecione"
         [options]="formPaymentOptions" optionLabel="label" optionValue="value" [ngClass]="{
           danger:
@@ -27,14 +25,15 @@
         }">
       </p-dropdown>
     </div>
-    <div class="field">
-      <span class="font-bold block mb-2">Data da Despesa</span>
-      <p-calendar formControlName="date" [showIcon]="true" dateFormat="dd/mm/yy" [locale]="ptBR" [ngClass]="{
+    <div class="col-12 md:col-3">
+      <span class="font-bold block mb-2"pTooltip="Data da Despesa" tooltipPosition="top">Data da Despesa</span>
+      <p-calendar formControlName="date" [showIcon]="true"  dateFormat="dd/mm/yy" [locale]="ptBR" [ngClass]="{
           danger:
             !form.controls['date'].valid && !form.controls['date'].pristine
         }"></p-calendar>
     </div>
-    <div class="card flex justify-content">
+    <div class="col-12 md:col-2">
+      <span class="font-bold block mb-2">Ação</span>
       <p-button icon="pi pi-check" label="Salvar" (click)="submit()"></p-button>
     </div>
   </div>
@@ -55,7 +54,7 @@
 <div class="card">
   <div class="flex flex-col md:flex-row md:items-center md:justify-end">
     <span class="p-input-icon-left m-2">
-      <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [showIcon]="true" [locale]="ptBR" dateFormat="dd/mm/yy"
+      <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [showIcon]="true" pTooltip="Selecione a data inicial e a data final" tooltipPosition="top" [locale]="ptBR" dateFormat="dd/mm/yy"
         [readonlyInput]="true" styleClass="customCalendarClass"></p-calendar>
       <span class="mx-2"></span>
       <button pButton type="button" label="Pesquisar" icon="pi pi-search" (click)="searchDate()"></button>

@@ -1,42 +1,106 @@
-<div class="col-12 p-0">
-  <div class="card card-w-title">
+<div class="m-0 small-screen-menu">
+  <div class="col-12 p-0">
+    <div class="card card-w-title">
       <p-menubar [model]="items" class="mr-2 custom-menu">
-          <ng-template pTemplate="start">
-              <img class="p-0" src="assets/image/logo.png" height="60"/>
-              <p-button label="{{ capitalizeFirstLetter(user.name) }}" styleClass="p-button-link text-2xl mb-3 " (click)="userOverlay.toggle($event)"></p-button>
-              <p-overlayPanel #userOverlay [dismissable]="true"><div class="full-height flex align-items-center justify-content-center">
-            </div>
-
-                  <p-menu styleClass="" [model]="userItems"></p-menu>
-              </p-overlayPanel>
-          </ng-template>
-          <ng-template pTemplate="end">
-              <p-overlayPanel #lowStockOverlayPanel [dismissable]="true" [showCloseIcon]="false">
-                  <div style="max-height: 300px; overflow-y: auto;">
-                      <p-table [value]="lowStockProducts" [tableStyle]="{ 'min-width': '20rem' }">
-                          <ng-template pTemplate="header">
-                              <tr>
-                                  <th>Nome</th>
-                                  <th>Em estoque</th>
-                              </tr>
-                          </ng-template>
-                          <ng-template pTemplate="body" let-product>
-                              <tr>
-                                  <td>{{ product.title }}</td>
-                                  <td [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">{{ product.quantity }}</td>
-                              </tr>
-                          </ng-template>
-                      </p-table>
-                  </div>
-              </p-overlayPanel>
-              <span *ngIf="lowStockProducts.length > 0" (click)="lowStockOverlayPanel.toggle($event)">
-                  <i class="pi pi-bell mr-3" pBadge [value]="lowStockProducts.length.toString()"></i>
-              </span>
-              <span *ngIf="lowStockProducts.length == 0">
-                  <i class="pi pi-bell"></i>
-              </span>
-              <button pButton pRipple icon="pi pi-sign-out" type="button" label="Sair" (click)="logout()" class="p-button-text p-button-plain"></button>
-          </ng-template>
+        <ng-template pTemplate="start">
+          <div class="d-flex align-items-center w-100">
+            <img class="p-0" src="assets/image/logo.png" height="60"/>
+            <span [ngStyle]="{'color': userNameColor}" class="text-lg mx-auto" (click)="userOverlay.toggle($event)">
+              {{ capitalizeFirstLetter(user.name) }}
+            </span>
+            <p-overlayPanel #userOverlay [dismissable]="true">
+              <div class="full-height flex align-items-center justify-content-center"></div>
+              <p-menu styleClass="" [model]="userItems"></p-menu>
+              <span>Alterar cor do nome: </span><input label="Cor" type="color" [(ngModel)]="userNameColor" (change)="saveUserNameColor()" />
+            </p-overlayPanel>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="end">
+          <div class="d-flex align-items-center">
+            <p-overlayPanel #lowStockOverlayPanel [dismissable]="true" [showCloseIcon]="false">
+              <div style="max-height: 300px; overflow-y: auto;">
+                <p-table [value]="lowStockProducts" [tableStyle]="{ 'min-width': '20rem' }">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Nome</th>
+                      <th>Em estoque</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product>
+                    <tr>
+                      <td>{{ product.title }}</td>
+                      <td [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">{{ product.quantity }}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </p-overlayPanel>
+            <span *ngIf="lowStockProducts.length > 0" (click)="lowStockOverlayPanel.toggle($event)">
+              <i class="pi pi-bell mr-3" pBadge [value]="lowStockProducts.length.toString()"></i>
+            </span>
+            <span *ngIf="lowStockProducts.length == 0">
+              <i class="pi pi-bell"></i>
+            </span>
+            <button pButton pRipple icon="pi pi-sign-out" type="button" label="Sair" (click)="logout()" class="p-button-text p-button-plain ml-3"></button>
+          </div>
+        </ng-template>
       </p-menubar>
+    </div>
   </div>
+</div>
+
+
+<div class="mb-3 large-screen-menu">
+  <p-menubar class="border-round">
+    <ng-template pTemplate="start">
+      <div class="d-flex align-items-center w-100">
+        <img src="assets/image/logo.png" height="60" class="mr-1" />
+        <span [ngStyle]="{'color': userNameColor}" class="text-base mx-auto" (click)="userOverlay.toggle($event)">
+          {{ capitalizeFirstLetter(user.name) }}
+        </span>
+        <p-overlayPanel #userOverlay [dismissable]="true">
+          <p-menu [model]="userItems"></p-menu>
+          <span>Alterar cor do nome: </span>
+          <input label="Cor" type="color" [(ngModel)]="userNameColor" (change)="saveUserNameColor()" />
+        </p-overlayPanel>
+        <div class="menu-buttons ml-auto">
+          <p-button [routerLink]="['/store']" icon="pi pi-list" label="Lista de Produtos" styleClass="p-button-text"></p-button>
+          <p-button [routerLink]="['/sale']" icon="pi pi-cart-plus" label="Caixa" styleClass="p-button-text"></p-button>
+          <p-button [routerLink]="['/sale/budget']" icon="pi pi-file-export" label="Orçamentos" styleClass="p-button-text"></p-button>
+          <p-button [routerLink]="['/sales']" icon="pi pi-shopping-cart" label="Vendas" styleClass="p-button-text"></p-button>
+          <p-button [routerLink]="['/features/entranceAndExit']" icon="pi pi-chart-line" label="Faturamento" styleClass="p-button-text"></p-button>
+          <p-button [routerLink]="['/ProductsToBuy']" icon="pi pi-shopping-bag" label="Pedidos" styleClass="p-button-text"></p-button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="d-flex align-items-center">
+        <p-overlayPanel #lowStockOverlayPanel [dismissable]="true" [showCloseIcon]="false">
+          <div style="max-height: 300px; overflow-y: auto;">
+            <p-table [value]="lowStockProducts" [tableStyle]="{ 'min-width': '20rem' }">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Name</th>
+                  <th>Em estoque</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product>
+                <tr>
+                  <td>{{ product.title }}</td>
+                  <td [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">{{ product.quantity }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-overlayPanel>
+        <span *ngIf="lowStockProducts.length > 0" (click)="lowStockOverlayPanel.toggle($event)">
+          <i class="pi pi-bell notification-icon" pBadge [value]="lowStockProducts.length.toString()" styleClass="p-button-info"></i>
+        </span>
+        <span *ngIf="lowStockProducts.length == 0">
+          <i class="pi pi-bell notification-icon"></i>
+        </span>
+        <p-button icon="pi pi-sign-out" label="Sair" styleClass="p-button-rounded p-button-text" (click)="logout()"></p-button>
+      </div>
+    </ng-template>
+  </p-menubar>
 </div>

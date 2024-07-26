@@ -1,35 +1,21 @@
-
 import { User } from "../models/user.model";
 import jwtDecode from 'jwt-decode';
 
 export class Security {
   public static set(user: User, token: string) {
     const data = JSON.stringify(user);
-    localStorage.setItem('wrconexao', this.b64EncodeUnicode(data));
-    localStorage.setItem('wrconexaotoken', token);
+    sessionStorage.setItem('wrconexao', this.b64EncodeUnicode(data));
+    sessionStorage.setItem('wrconexaotoken', token);
   }
-
-  public static isTokenExpired(): boolean {
-    const token = this.getToken();
-    if (token) {
-      const decodedToken: any = jwtDecode(token); // Decodifica o token JWT para obter os dados
-      const expirationDate = new Date(decodedToken.exp * 1000); // Atribui a data de expiração do token em segundos
-      const now = new Date();
-      return now > expirationDate;
-    }
-    return true; // Se o token não estiver disponível, assume-se que o token tenha expirado
-  }
-
-
 
   public static setUser(user: User) {
     const data = JSON.stringify(user);
-    localStorage.setItem('wrconexao', this.b64EncodeUnicode(data));
+    sessionStorage.setItem('wrconexao', this.b64EncodeUnicode(data));
   }
 
   public static setPass(pass: User) {
     const data = JSON.stringify(pass);
-    sessionStorage.setItem('user',this.b64EncodeUnicode(data));
+    sessionStorage.setItem('user', this.b64EncodeUnicode(data));
   }
 
   public static getPass(): User {
@@ -41,13 +27,12 @@ export class Security {
     }
   }
 
-
   public static setToken(token: string) {
-    localStorage.setItem('wrconexaotoken', token);
+    sessionStorage.setItem('wrconexaotoken', token);
   }
 
   public static getUser(): User {
-    const data = localStorage.getItem('wrconexao');
+    const data = sessionStorage.getItem('wrconexao');
     if (data) {
       return JSON.parse(this.b64DecodeUnicode(data));
     } else {
@@ -56,7 +41,7 @@ export class Security {
   }
 
   public static getToken(): string {
-    const data = localStorage.getItem('wrconexaotoken');
+    const data = sessionStorage.getItem('wrconexaotoken');
     if (data) {
       return data;
     } else {
@@ -65,15 +50,12 @@ export class Security {
   }
 
   public static hasToken(): boolean {
-    if (this.getToken())
-      return true;
-    else
-      return false;
+    return !!this.getToken();
   }
 
   public static clear() {
-    localStorage.removeItem('wrconexao');
-    localStorage.removeItem('wrconexaotoken');
+    sessionStorage.removeItem('wrconexao');
+    sessionStorage.removeItem('wrconexaotoken');
   }
 
   public static clearPass() {

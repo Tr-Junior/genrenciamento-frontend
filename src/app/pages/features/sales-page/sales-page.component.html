@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 gap-0">
     <!-- Mostrar os totais por forma de pagamento e o lucro estimado total -->
     <div *ngFor="let paymentTotal of paymentTotals" class="font-bold text-gray-900 m-2 px-4 py-2 border-rounded"
       [ngClass]="paymentTotal.className">
@@ -11,13 +11,11 @@
 <div class="card">
   <div class="flex flex-col md:flex-row md:items-center md:justify-end m-2">
     <span class="p-input-icon-left">
-      <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [showIcon]="true" [locale]="ptBR" dateFormat="dd/mm/yy"
+      <p-calendar [(ngModel)]="rangeDates" pTooltip="Selecione a data inicial e a data final" tooltipPosition="top"  selectionMode="range" [showIcon]="true" [locale]="ptBR" dateFormat="dd/mm/yy"
         [readonlyInput]="true" styleClass="customCalendarClass"></p-calendar>
-      <span class="mx-2"></span>
-      <button pButton type="button" label="Pesquisar" icon="pi pi-search" (click)="listOrders()"></button>
-      <span class="px-2"></span>
-      <button pButton type="button" label="Limpar" icon="pi pi-times" (click)="clearSearch()"></button>
-      <button class="ml-4" pButton type="button" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)">Gerar relatório</button>
+      <button class="ml-3" pButton type="button"  label="Pesquisar" icon="pi pi-search" (click)="listOrders()"></button>
+      <button class="ml-3 mt-3" pButton type="button" label="Limpar" icon="pi pi-times" (click)="clearSearch()"></button>
+      <button class="ml-3 mt-3" pButton type="button" label="Gerar relatório" icon="pi pi-file-pdf" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></button>
     </span>
   </div>
 

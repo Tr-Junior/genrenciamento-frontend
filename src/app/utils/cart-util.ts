@@ -1,16 +1,19 @@
 import { Cart } from "../models/cart-model";
-import { CartItem } from "../models/cart-item.model";
+import { CartItem } from "../models/cart-item.model"; // Ajuste o caminho conforme necessário
+import { Security } from "./Security.util";
 
 export class CartUtil {
+  private static getUserKey(): string {
+    const user = Security.getUser();
+    if (!user || !user._id) {
+      throw new Error("Usuário não autenticado");
+    }
+    return `shopcart_${user._id}`;
+  }
+
   public static get(): Cart {
-    // Recupera os dados do LocalStorage
-    const data = localStorage.getItem('shopcart');
-
-    // Caso não haja dados, retorna um novo carrinho
-    if (!data)
-      return new Cart();
-
-    // Caso haja dados, retorna o carrinho
+    const data = sessionStorage.getItem(this.getUserKey());
+    if (!data) return new Cart();
     return JSON.parse(data);
   }
 
@@ -22,22 +25,15 @@ export class CartUtil {
     purchasePrice: number,
     discount: number,
   ) {
-    // Obtém o carrinho
     let cart = this.get();
-
-    // Gera o novo item
     const item = new CartItem(_id, title, quantity, discount, price, purchasePrice);
-    // Adiciona ao carrinho
-
     const existingItemIndex = cart.items.findIndex(i => i._id === item._id);
     if (existingItemIndex > -1) {
       cart.items[existingItemIndex].quantity += item.quantity;
     } else {
       cart.items.push(item);
     }
-    // Salva no localStorage
     this.update(cart);
-
   }
 
   public static updateItem(
@@ -48,49 +44,36 @@ export class CartUtil {
     purchasePrice: number,
     discount: number
   ) {
-    // Obtém o carrinho
     let cart = this.get();
-
-    // Verifica se já existe um item com o mesmo ID no carrinho
     const existingItemIndex = cart.items.findIndex(i => i._id === _id);
-
     if (existingItemIndex > -1) {
-      // Se o item já existe, substitua a quantidade pelo novo valor
       cart.items[existingItemIndex].quantity = quantity;
-      // Recalcule o valor total com desconto para o item
     } else {
-      // Se o item não existe, adicione-o ao carrinho
       const item = new CartItem(_id, title, quantity, discount, price, purchasePrice);
-      // Calcula o valor total com desconto do item
       cart.items.push(item);
     }
-
-    // Salva no localStorage
     this.update(cart);
   }
-
 
   public static addPaymentForm(paymentForm: string): void {
     let cart = this.get();
     cart.paymentForm = paymentForm;
     this.update(cart);
-  };
+  }
 
   public static addDiscount(generalDiscount: number): void {
     let cart = this.get();
     cart.generalDiscount = generalDiscount;
     this.update(cart);
-  };
-
+  }
 
   public static clear() {
-    localStorage.removeItem('shopcart');
-
+    sessionStorage.removeItem(this.getUserKey());
   }
+
   public static getItems(): CartItem[] {
     return this.get().items;
   }
-
 
   public static removeItem(item: CartItem): void {
     let cart = this.get();
@@ -110,30 +93,31 @@ export class CartUtil {
       }
     }, 0);
   }
+
   public static getTotal(): number {
     return this.getItems().reduce((total, item) => {
       return (item.quantity * item.price) - ((item.quantity * item.price) * item.discount / 100);
     }, 0);
   }
+
   public static getGrandTotal(): number {
     const cart = this.get();
     const subtotal = this.getSubtotal();
     return subtotal - (subtotal * cart.generalDiscount! / 100);
   }
 
-
   private static update(cart: Cart) {
-    localStorage.setItem('shopcart', JSON.stringify(cart));
+    sessionStorage.setItem(this.getUserKey(), JSON.stringify(cart));
   }
 
   static getQuotes(): Cart[] {
-    const quotes = localStorage.getItem('quotes');
+    const quotes = sessionStorage.getItem('quotes');
     return quotes ? JSON.parse(quotes) : [];
   }
 
   static saveQuote(quote: Cart): void {
     const quotes = this.getQuotes();
     quotes.push(quote);
-    localStorage.setItem('quotes', JSON.stringify(quotes));
+    sessionStorage.setItem('quotes', JSON.stringify(quotes));
   }
 }

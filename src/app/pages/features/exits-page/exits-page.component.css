@@ -29,3 +29,27 @@
 .th {
   text-align: center;
 }
+.truncate {
+  display: inline-block;
+  max-width: 150px; /* Ajuste conforme necessário */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 450px) {
+  .btn-full {
+    display: none;
+  }
+
+  .btn-icon-only {
+    display: flex;
+  }
+
+  .truncate {
+    display: inline-block;
+    max-width: 500px; /* Ajuste conforme necessário */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

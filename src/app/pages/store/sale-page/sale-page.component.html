@@ -5,7 +5,7 @@
         <div class="flex align-items-center font-bold border-round "> <!-- Ajuste no espaçamento -->
           <span class="p-input-icon-left ml-auto">
             <i class="pi pi-search"></i>
-            <input class="text" pInputText type="text" (keyup)="onKeyUp($event)"  [(ngModel)]="searchQuery" (ngModelChange)="search()"
+            <input pTooltip="Digite o nome do produto para pesquisa" tooltipPosition="top"  class="text" pInputText type="text" (keyup)="onKeyUp($event)"  [(ngModel)]="searchQuery" (ngModelChange)="search()"
               placeholder="Pesquisar produtos..." />
           </span>
           <p-button icon="pi pi-times" styleClass=" p-button-danger p-button-text" (onClick)="clearSearch()"

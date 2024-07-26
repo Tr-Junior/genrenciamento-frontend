@@ -27,7 +27,7 @@
   <div class="col pr-0 mr-0 pl-0 ml-0">
     <span class="p-input-icon-left align-items-center justify-content-center">
       <i class="pi pi-search"></i>
-      <input class="search" pInputText type="text" [(ngModel)]="searchQuery" (ngModelChange)="search()"
+      <input pTooltip="Digite o nome do produto para pesquisa" tooltipPosition="top"  class="search" pInputText type="text" [(ngModel)]="searchQuery" (ngModelChange)="search()"
         placeholder="Pesquisar produtos..." />
     </span>
     <p-button icon="pi pi-times" styleClass=" p-button-danger p-button-text" (onClick)="clearSearch()"

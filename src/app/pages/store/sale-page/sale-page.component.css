@@ -25,8 +25,34 @@
   text-overflow: ellipsis;
 }
 
+::ng-deep .button .p-button {
+  background-color: rgb(93, 105, 110); /* Cor de fundo do botão */
+  color: white; /* Cor do texto do botão */
+  border-color: rgb(69, 77, 80);
+}
 
+/* Estilo do botão PDF */
+::ng-deep .pdf .p-button {
+  background-color: rgb(14, 110, 51); /* Cor de fundo do botão */
+  color: white; /* Cor do texto do botão */
+  border-color: rgb(10, 88, 40);
+}
+::ng-deep .button .p-button:hover,
+::ng-deep .button .p-button:active,
+::ng-deep .button .p-button:focus {
+  background-color: rgb(85, 93, 97); /* Mesma cor de fundo */
+  color: white; /* Mesma cor do texto */
+  border-color: rgb(69, 77, 80); /* Mesma cor da borda */
+}
 
+/* Estilos para o estado :hover, :active e :focus para o botão PDF */
+::ng-deep .pdf .p-button:hover,
+::ng-deep .pdf .p-button:active,
+::ng-deep .pdf .p-button:focus {
+  background-color: rgb(22, 83, 46); /* Mesma cor de fundo */
+  color: white; /* Mesma cor do texto */
+  border-color: rgb(10, 88, 40); /* Mesma cor da borda */
+}
 @media (max-width: 450px) {
   .btn-full {
     display: none;

@@ -23,6 +23,7 @@ export class NavbarComponent {
   public busy = false;
   product: Product[] = [];
   totalPurchaseValue: number = 0;
+  userNameColor: string = '#000000'; // Cor padrão
 
   constructor(
     private router: Router,
@@ -32,7 +33,6 @@ export class NavbarComponent {
   ) { }
 
   ngOnInit(): void {
-
     this.user = Security.getUser();
     this.items = [
       { label: 'Lista de Produtos', icon: 'pi pi-list', routerLink: '/store' },
@@ -51,7 +51,11 @@ export class NavbarComponent {
     });
     this.listProd();
 
-
+    // Carregar a cor do nome do usuário do local storage
+    const savedColor = localStorage.getItem('userNameColor');
+    if (savedColor) {
+      this.userNameColor = savedColor;
+    }
   }
 
   capitalizeFirstLetter(value: string): string {
@@ -117,5 +121,9 @@ export class NavbarComponent {
       product.quantity <= product.min_quantity && product.min_quantity > 0
     );
     this.lowStockNotificationService.setLowStockProducts(lowStockProducts);
+  }
+
+  saveUserNameColor() {
+    localStorage.setItem('userNameColor', this.userNameColor);
   }
 }

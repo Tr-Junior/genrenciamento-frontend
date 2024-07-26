@@ -128,18 +128,25 @@ export class BudgetPageComponent implements OnInit {
     const doc = new jsPDF();
 
     // Adiciona a logo centralizada
-    const logoWidth = 100; // largura da logo
-    const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2; // posição X centralizada
-    doc.addImage(this.logo, 'JPEG', logoX, 5, logoWidth, 30);
+   const logoWidth = 100; // largura da logo
+const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2; // posição X centralizada
+doc.addImage(this.logo, 'JPEG', logoX, 5, logoWidth, 30);
 
-    // Informações de endereço, telefone e CNPJ com ícones centralizados
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-    const infoX = 45; // posição X das informações
-    doc.text(`Endereço: ${this.endereco}`, infoX, 40);
-    doc.text(`Telefone: ${this.telefone}`, infoX, 50);
-    doc.text(`CNPJ: ${this.cnpj}`, infoX + 70, 50); // adiciona 70 para espaçamento entre telefone e CNPJ
+// Informações de endereço, telefone e CNPJ com ícones centralizados
+doc.setFontSize(12);
+doc.setFont('helvetica', 'normal');
 
+// Texto de Endereço
+const enderecoText = `Endereço: ${this.endereco}`;
+const enderecoWidth = doc.getTextWidth(enderecoText);
+const enderecoX = (doc.internal.pageSize.getWidth() - enderecoWidth) / 2;
+doc.text(enderecoText, enderecoX, 45);
+
+// Texto de Telefone
+const telefoneText = `Telefone: ${this.telefone}`;
+const telefoneWidth = doc.getTextWidth(telefoneText);
+const telefoneX = (doc.internal.pageSize.getWidth() - telefoneWidth) / 2;
+doc.text(telefoneText, telefoneX, 50);
     // Obtém a data e hora local
     const currentDate = new Date();
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;

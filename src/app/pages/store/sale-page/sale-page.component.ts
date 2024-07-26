@@ -387,27 +387,33 @@ createBudget() {
 
 
   logo = 'assets/image/logo2.png'; // Adicione aqui a string base64 da sua imagem
-  nome = 'Conexão elétrica e hidráulica';
-  endereco = 'Qd 33 Conj "B" N° 01-A setor 2  -  Águas Lindas de Goiás';
-  telefone = '(61) 99571-0019';
+  nome = 'Manancial papelaria e utilidades - xerox e impressoões';
+  endereco = 'Quadra 10, lote 36, loja 01 Jardim Guaíra I -  Águas Lindas de Goiás';
+  telefone = '(61) 99581-0812';
   cnpj = '52.068.148/0001-61';
 
   generatePDF(logo: string, nome: string, endereco: string, telefone: string, cnpj: any): void {
     const doc = new jsPDF();
 
-    // Adiciona a logo centralizada
     const logoWidth = 100; // largura da logo
-    const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2; // posição X centralizada
-    doc.addImage(logo, 'JPEG', logoX, 5, logoWidth, 30);
+const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2; // posição X centralizada
+doc.addImage(logo, 'JPEG', logoX, 5, logoWidth, 30);
 
-    // Informações de endereço, telefone e CNPJ com ícones centralizados
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-    const infoX = 45; // posição X das informações
-    doc.text(`Endereço: ${endereco}`, infoX, 40);
-    doc.text(`Telefone: ${telefone}`, infoX, 50);
-    doc.text(`CNPJ: ${cnpj}`, infoX + 70, 50); // adiciona 70 para espaçamento entre telefone e CNPJ
+// Informações de endereço, telefone e CNPJ com ícones centralizados
+doc.setFontSize(12);
+doc.setFont('helvetica', 'normal');
 
+// Texto de Endereço
+const enderecoText = `Endereço: ${endereco}`;
+const enderecoWidth = doc.getTextWidth(enderecoText);
+const enderecoX = (doc.internal.pageSize.getWidth() - enderecoWidth) / 2;
+doc.text(enderecoText, enderecoX, 45);
+
+// Texto de Telefone
+const telefoneText = `Telefone: ${telefone}`;
+const telefoneWidth = doc.getTextWidth(telefoneText);
+const telefoneX = (doc.internal.pageSize.getWidth() - telefoneWidth) / 2;
+doc.text(telefoneText, telefoneX, 50);
     // Obtém a data e hora local
     const currentDate = new Date();
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;

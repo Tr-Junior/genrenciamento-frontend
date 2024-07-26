@@ -13,7 +13,7 @@ export class AuthService implements CanActivate {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const token = Security.getToken();
-    if (!token || Security.isTokenExpired()) {
+    if (!token) {
       this.router.navigate(['/']);
       return false;
     }
