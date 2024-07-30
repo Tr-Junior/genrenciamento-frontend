@@ -119,9 +119,9 @@ export class BudgetPageComponent implements OnInit {
   }
 
   logo = 'assets/image/logo2.png'; // Adicione aqui a string base64 da sua imagem
-  nome = 'Manancial';
-  endereco = 'Qd 33 Conj "B" N° 01-A setor 2  -  Águas Lindas de Goiás';
-  telefone = '(61) 99571-0019';
+  nome = 'Manancial papelaria e utilidades - xerox e impressoões';
+  endereco = 'Quadra 10, lote 36, loja 01 Jardim Guaíra I -  Águas Lindas de Goiás';
+  telefone = '(61) 99581-0812';
   cnpj = '52.068.148/0001-61';
 
   generatePDFForBudget(budget: Budget): void {

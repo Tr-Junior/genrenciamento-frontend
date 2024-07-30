@@ -28,26 +28,7 @@ export class LoginModalComponent {
   }
 
   login() {
-    const storedUser = Security.getUser();
-    if (storedUser) {
-      const tokenPassword = storedUser.pass;
-      if (this.password === tokenPassword) {
-        Security.setPass(storedUser);
-        // Obter a rota de destino armazenada anteriormente
-        const redirectRoute = sessionStorage.getItem('redirectRoute');
-        if (redirectRoute) {
-          this.router.navigate([redirectRoute]);
-          sessionStorage.removeItem('redirectRoute');
-        } else {
-          this.router.navigate(['/']);
-        }
-      } else {
-        this.toastr.error('Credenciais inválidas. Por favor, tente novamente.');
-      }
-    } else {
-      this.toastr.error('Usuário não autenticado. Por favor, faça login.');
-      this.router.navigate(['/login']);
-    }
+
   }
 
   setPass(user: any) {

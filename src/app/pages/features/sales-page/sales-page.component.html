@@ -94,7 +94,7 @@
                 <td>{{ items.quantity }}</td>
                 <td>{{ items.price | currency}}</td>
                 <td>{{ items.price * items.quantity | currency}}</td>
-                <td>{{ items.purchasePrice * items.quantity | currency}}</td>
+                <td>{{ ((items.price * items.quantity)-(items.purchasePrice * items.quantity))| currency}}</td>
               </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">

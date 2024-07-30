@@ -10,11 +10,11 @@
         <!-- <h2>{{mode}}</h2> -->
         <div [formGroup]="form">
           <label for="name" class="block text-800 text-xl font-medium mb-2">Usuário</label>
-          <input formControlName="name" id="name" type="text" placeholder="Usuário" pInputText
+          <input class="p-inputtext-sm" formControlName="name" id="name" type="text" placeholder="Usuário" pInputText
             class="w-full md:w-30rem mb-5" style="padding:1rem" (keydown.enter)="submit()" pHotkey="enter">
 
             <label for="name" class="block text-800 text-xl font-medium mb-2">Senha</label>
-            <input formControlName="password" id="password" type="password" placeholder="Senha" pInputText
+            <input class="p-inputtext-sm" formControlName="password" id="password" type="password" placeholder="Senha" pInputText
               class="w-full md:w-30rem mb-5" style="padding:1rem" (keydown.enter)="submit()" pHotkey="enter">
 
           <div class="flex align-items-center justify-content-between mb-5 gap-5">

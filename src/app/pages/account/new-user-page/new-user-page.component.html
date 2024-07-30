@@ -16,26 +16,21 @@
           <label class="block text-900 font-medium text-xl mb-2">Senha</label>
           <p-password formControlName="password" placeholder="Senha"
             [ngClass]="{ 'ng-dirty': form.controls['password'].invalid && form.controls['password'].touched }" ng-dirty
-            inputStyleClass="w-full p-3 md:w-30rem" [feedback]="false"></p-password>
+            inputStyleClass="w-full md:w-30rem" [feedback]="false"></p-password>
           <label class="block text-900 font-medium text-xl mb-2 pt-5">Confirmar Senha</label>
           <p-password formControlName="confirmarSenha" placeholder="Confirmar Senha"
             [ngClass]="{ 'ng-dirty': form.controls['confirmarSenha'].invalid && form.controls['confirmarSenha'].touched }"
-            ng-dirty inputStyleClass="w-full p-3 md:w-30rem" [feedback]="false"></p-password>
+            ng-dirty inputStyleClass="w-full md:w-30rem" [feedback]="false"></p-password>
           <small
             *ngIf="form.hasError('mismatch') && (form.controls['confirmarSenha'].dirty || form.controls['confirmarSenha'].touched)"
             class=" flex text-red-500">As senhas não coincidem
           </small>
-          <label class="block text-900 font-medium text-xl mb-2 pt-5">Senha Vendas</label>
-            <p-password formControlName="pass" placeholder="Senha - Vendas"
-            [ngClass]="{ 'ng-dirty': form.controls['pass'].invalid && form.controls['pass'].touched }"
-            ng-dirty inputStyleClass="w-full p-3 md:w-30rem" [feedback]="false"></p-password>
           <label class="block text-900 font-medium text-xl mb-2 pt-5">Tipo de usuário</label>
           <p-dropdown formControlName="roles" [options]="roles" placeholder="Selecione..."
             class="w-full md:w-30rem mb-5"
             [ngClass]="{ 'ng-dirty': form.controls['roles'].invalid && form.controls['roles'].touched }"
             ng-dirty></p-dropdown>
-
-          <div class="card flex justify-center">
+          <div class="card flex justify-center mt-4">
             <button pButton pRipple label="Salvar" class="w-full p-3 text-xl" (click)="submit()"></button>
             <span class="block pr-3"></span>
             <button pButton pRipple label="Cancelar" class="w-full p-3 text-xl" (click)="resetForm()"></button>

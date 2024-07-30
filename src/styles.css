@@ -1,19 +1,27 @@
 @import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
 
-
-
 body {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
   background-color: #b3dbe9;
+  font-size: 0.975rem; /* Tamanho da fonte reduzido */
+}
+
+* {
+  font-size: 0.975rem; /* Tamanho da fonte reduzido para todos os elementos */
+}
+
+input, select, textarea, button {
+  height: 2.2rem; /* Altura reduzida */
+  padding: 0.25rem 0.5rem; /* Ajuste o padding conforme necessário */
+  font-size: 0.900rem; /* Certifique-se de que o tamanho da fonte é consistente */
 }
 
 .outofstock {
   font-weight: 700;
   color: #ff5252;
-  /* text-decoration: line-through; */
 }
 
 .lowstock {
@@ -34,6 +42,7 @@ body {
 :host ::ng-deep .row-accessories {
   background-color: rgba(0, 0, 0, 0.15) !important;
 }
+
 .customCalendarClass .p-datepicker-today {
   font-weight: bold;
   font-size: medium;
@@ -48,7 +57,6 @@ body {
   border: 1px solid #dee2e6;
   border-width: 1px 0 0 0;
   padding: 0.5rem 0.5rem;
-
 }
 
 .p-datatable .p-datatable-thead > tr > th {
@@ -74,7 +82,6 @@ body {
 .p-menubar {
   padding: 0rem 0.5rem !important;
 }
-
 
 /* Esconder parte do texto em telas menores que 1024px */
 @media (max-width: 1024px) {
