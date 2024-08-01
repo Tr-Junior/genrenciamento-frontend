@@ -13,6 +13,7 @@ import { User } from 'src/app/models/user.model';
 import * as XLSX from 'xlsx';
 import { LowStockNotificationService } from 'src/app/services/low-stok-notification.service';
 import { ComunicacaoService } from 'src/app/services/comunicacao.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class ProductsPageComponent implements OnInit {
   public searchQuery: string = '';
   totalPurchaseValue: number = 0;
   public displayModal: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private messageService: MessageService,
@@ -47,6 +49,7 @@ export class ProductsPageComponent implements OnInit {
     private fb: FormBuilder,
     private lowStockNotificationService: LowStockNotificationService,
     private toastr: ToastrService,
+    private authService: AuthService,
     private comunicacaoService: ComunicacaoService
   ) {
 
@@ -70,6 +73,7 @@ export class ProductsPageComponent implements OnInit {
   }
 
 
+
   ngOnInit() {
     this.listProd();
     this.user = Security.getUser();
@@ -77,6 +81,8 @@ export class ProductsPageComponent implements OnInit {
       this.fecharModal();
       this.listProd();
     });
+
+    this.isAdmin = this.authService.isUserAdmin();
   }
 
 

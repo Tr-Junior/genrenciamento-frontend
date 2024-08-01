@@ -30,4 +30,8 @@ export class AuthService implements CanActivate {
     return true;
   }
 
+  isUserAdmin(): boolean {
+    return Security.hasRole('admin');
+  }
+
 }
