@@ -1,7 +1,8 @@
-<div class="hide-on-small">
+
+<div *ngIf="isAdmin" class="hide-on-small">
   <app-produc-registration-page></app-produc-registration-page>
 </div>
-<p-dialog header="Cadastrar Produto" [(visible)]="displayModal" [modal]="true" [style]="{width: '80vw'}">
+<p-dialog header="Cadastrar Produto" [(visible)]="displayModal" [modal]="true" [style]="{width: '80vw'}" *ngIf="isAdmin">
   <app-produc-registration-page></app-produc-registration-page>
 </p-dialog>
 
@@ -34,6 +35,7 @@
       </div>
 
     </ng-template>
+    <!-- Cabeçalho da tabela -->
     <ng-template pTemplate="header">
       <tr>
         <th style="text-align: center">#</th>
@@ -46,7 +48,7 @@
         <th style="text-align: center">
           <span class="truncate" pTooltip="Estoque mínimo" tooltipPosition="top">Estoque mínimo</span>
         </th>
-        <th style="text-align: center">
+        <th *ngIf="isAdmin" style="text-align: center">
           <span class="truncate" pTooltip="Custo" tooltipPosition="top">Custo</span>
         </th>
         <th style="text-align: center">
@@ -54,17 +56,18 @@
         </th>
         <th style="text-align: center">Opções</th>
       </tr>
-
     </ng-template>
+
+    <!-- Corpo da tabela -->
     <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
-      <tr [pEditableRow]="product" [attr.id]="'productRow_' + product._id" >
+      <tr [pEditableRow]="product" [attr.id]="'productRow_' + product._id">
         <td style="text-align: center">
           {{ri+1}}
         </td>
         <td style="text-align: center">
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="selectedProduct.title" required style="width: 100%;">
+              <input pInputText type="text" [(ngModel)]="selectedProduct.title" required style="width: 100%;" [disabled]="!isAdmin">
             </ng-template>
             <ng-template pTemplate="output">
               {{product.title}}
@@ -76,15 +79,19 @@
             <ng-template pTemplate="input">
               <input size="3" pInputText type="text" pKeyFilter="num" id="number"
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57" [(ngModel)]="selectedProduct.quantity"
-                required>
+                required [disabled]="!isAdmin">
             </ng-template>
             <ng-template pTemplate="output">
-              <div
-                [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">
-                <span *ngIf="product.quantity !== 0">{{ product.quantity }}</span>
+              <div [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">
+                <span *ngIf="product.quantity !== 0"
+                      pTooltip="Quantidade no orçamento: {{ getQuantityInBudget(product._id).quantity }} | Cliente: {{ getQuantityInBudget(product._id).clients.join(', ') }}"
+                      tooltipPosition="top">
+                  {{ product.quantity }}
+                </span>
                 <span *ngIf="product.quantity === 0" class="badge">Fora de Estoque</span>
               </div>
             </ng-template>
+
           </p-cellEditor>
         </td>
         <td style="text-align: center">
@@ -92,7 +99,7 @@
             <ng-template pTemplate="input">
               <input size="3" pInputText type="text" pKeyFilter="num" id="number"
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                [(ngModel)]="selectedProduct.min_quantity" required>
+                [(ngModel)]="selectedProduct.min_quantity" required [disabled]="!isAdmin">
             </ng-template>
             <ng-template pTemplate="output">
               <div class="min-stok">
@@ -101,7 +108,7 @@
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="text-align: center">
+        <td *ngIf="isAdmin" style="text-align: center">
           <p-cellEditor>
             <ng-template pTemplate="input">
               <p-inputNumber [size]="6" pKeyFilter="num" inputId="currency-user" mode="currency" currency="BRL"
@@ -116,7 +123,7 @@
           <p-cellEditor>
             <ng-template pTemplate="input">
               <p-inputNumber [size]="6" pKeyFilter="num" id="number" inputId="currency-user" mode="currency"
-                currency="BRL" locale="pt" [(ngModel)]="selectedProduct.price"></p-inputNumber>
+                currency="BRL" locale="pt" [(ngModel)]="selectedProduct.price" [disabled]="!isAdmin"></p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
               {{product.price | currency}}
@@ -135,7 +142,7 @@
             </p-button>
 
             <!-- Botão Editar -->
-            <button *ngIf="!editing"
+            <button *ngIf="!editing && isAdmin"
                     pButton
                     pRipple
                     type="button"
@@ -148,7 +155,7 @@
             </button>
 
             <!-- Botão Salvar -->
-            <button *ngIf="editing"
+            <button *ngIf="editing && isAdmin"
                     pButton
                     pRipple
                     type="button"
@@ -161,7 +168,7 @@
             </button>
 
             <!-- Botão Cancelar -->
-            <button *ngIf="editing"
+            <button *ngIf="editing && isAdmin"
                     pButton
                     pRipple
                     type="button"
@@ -174,7 +181,7 @@
             </button>
 
             <!-- Botão Excluir -->
-            <p-button *ngIf="!editing"
+            <p-button *ngIf="!editing && isAdmin"
                       icon="pi pi-trash"
                       styleClass="p-button-rounded p-button-danger p-button-outlined"
                       pTooltip="Excluir item"
