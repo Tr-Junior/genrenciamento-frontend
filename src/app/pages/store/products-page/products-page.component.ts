@@ -14,6 +14,7 @@ import * as XLSX from 'xlsx';
 import { LowStockNotificationService } from 'src/app/services/low-stok-notification.service';
 import { ComunicacaoService } from 'src/app/services/comunicacao.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Budget } from 'src/app/models/budget-model';
 
 
 @Component({
@@ -33,14 +34,14 @@ export class ProductsPageComponent implements OnInit {
   name: any;
   @Input() products!: Product;
   product: Product[] = [];
-  clonedProducts: { [s: string]: Product } = {};
+  public clonedProducts: { [s: string]: Product } = {};
   public selectedProduct!: Product;
   public updating: boolean = false;
   public searchQuery: string = '';
-  totalPurchaseValue: number = 0;
+  public totalPurchaseValue: number = 0;
   public displayModal: boolean = false;
-  isAdmin: boolean = false;
-
+  public isAdmin: boolean = false;
+  public budgets: Budget[] = [];
   constructor(
     private messageService: MessageService,
     private data: DataService,
@@ -76,6 +77,7 @@ export class ProductsPageComponent implements OnInit {
 
   ngOnInit() {
     this.listProd();
+    this.listBudget();
     this.user = Security.getUser();
     this.comunicacaoService.produtoSalvo$.subscribe(() => {
       this.fecharModal();
@@ -108,6 +110,35 @@ export class ProductsPageComponent implements OnInit {
           this.product = data;
         })
   }
+
+  listBudget() {
+    this.service.getBudget().subscribe(
+      (data: Budget[]) => {
+        this.budgets = data;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  getQuantityInBudget(productId: string): { quantity: number, clients: string[] } {
+    let quantity = 0;
+    let clients: Set<string> = new Set();  // Usando Set para evitar duplicatas
+
+    this.budgets.forEach(budget => {
+      budget.budget.items.forEach(item => {
+        if (item.product === productId) {
+          quantity += item.quantity;
+          clients.add(budget.client);  // Adiciona o nome do cliente ao Set
+        }
+      });
+    });
+
+    return { quantity, clients: Array.from(clients) };  // Converte Set para Array
+  }
+
+
 
 
   delete(id: any) {

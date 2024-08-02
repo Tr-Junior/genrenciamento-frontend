@@ -1,4 +1,5 @@
-<div *ngIf="isAdmin" class="hide-on-small">
+
+<div *ngIf="isAdmin" *ngIf="isAdmin" class="hide-on-small">
   <app-produc-registration-page></app-produc-registration-page>
 </div>
 <p-dialog header="Cadastrar Produto" [(visible)]="displayModal" [modal]="true" [style]="{width: '80vw'}" *ngIf="isAdmin">
@@ -81,11 +82,13 @@
                 required [disabled]="!isAdmin">
             </ng-template>
             <ng-template pTemplate="output">
-              <div [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">
+              <div
+                [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity != 0 && product.quantity <= 10),'instock': product.quantity > 10}">
                 <span *ngIf="product.quantity !== 0">{{ product.quantity }}</span>
                 <span *ngIf="product.quantity === 0" class="badge">Fora de Estoque</span>
               </div>
             </ng-template>
+
           </p-cellEditor>
         </td>
         <td style="text-align: center">

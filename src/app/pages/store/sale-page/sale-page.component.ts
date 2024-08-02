@@ -38,12 +38,14 @@ export class SalePageComponent {
   public searchQuery: string = '';
   public searching: boolean = false;
   public user!: User;
-  public total = 0;
+  public total: any;
   public totalTroco = 0;
   public quotes: Cart[] = [];
   public customerName: string = '';  // Adiciona
   public filteredCustomers: string[] = [];
   public customerNames: string[] = [];
+  creditPercentage: number = 0;
+  debitPercentage: number = 0;
 
   constructor(
     private toastr: ToastrService,
@@ -59,12 +61,21 @@ export class SalePageComponent {
     this.grandTotal = CartUtil.getGrandTotal();
   }
 
+  currencySettings = {
+    mode: 'decimal',
+    locale: 'pt-BR',
+    prefix: 'R$ ',
+    decimalSeparator: ',',
+    thousandSeparator: '.'
+  };
+
   ngOnInit() {
     this.loadCart();
     this.listProdSilent();
     this.user = Security.getUser();
     this.calculateTotal(); // Carregar orçamentos salvos na inicialização
     this.loadCustomerNames();
+    this.loadPercentages();
   }
 
   loadCart() {
@@ -206,11 +217,35 @@ export class SalePageComponent {
     return ['Crédito', 'Débito', 'Dinheiro', 'Pix'];
   }
 
+  loadPercentages() {
+    const credit = localStorage.getItem('creditPercentage');
+    const debit = localStorage.getItem('debitPercentage');
+
+    if (credit) {
+      this.creditPercentage = parseFloat(credit);
+    }
+    if (debit) {
+      this.debitPercentage = parseFloat(debit);
+    }
+  }
+
+
   submitOrder() {
     if (!this.selectedPayment) {
       this.toastr.error('Selecione a forma de pagamento', 'Erro');
       return;
     }
+
+    this.loadPercentages(); // Carrega as taxas do local storage
+
+    let totalWithFee = this.grandTotal;
+
+    if (this.selectedPayment === 'Débito') {
+      totalWithFee -= this.grandTotal * (this.debitPercentage / 100);
+    } else if (this.selectedPayment === 'Crédito') {
+      totalWithFee -= this.grandTotal * (this.creditPercentage / 100);
+    }
+
     // Cria um objeto contendo as informações do cliente e dos itens do carrinho
     const order = {
       customer: this.user.name,
@@ -227,7 +262,7 @@ export class SalePageComponent {
         }),
         formPayment: this.selectedPayment,
         discount: this.generalDiscount,
-        total: this.grandTotal
+        total: totalWithFee // Atualiza o total com a taxa
       }
     };
 
@@ -242,9 +277,10 @@ export class SalePageComponent {
       error: (err: any) => {
         console.log(err);
         this.busy = false;
-        this.toastr.success(err.message);
+        this.toastr.error(err.message);
       }
     });
+
     this.clearPaymentMethod();
     this.loadCart();
     this.clearTroco();
