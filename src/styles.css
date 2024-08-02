@@ -14,7 +14,7 @@ body {
 }
 
 input, select, textarea, button {
-  height: 2.2rem; /* Altura reduzida */
+  height: 2.46rem; /* Altura reduzida */
   padding: 0.25rem 0.5rem; /* Ajuste o padding conforme necessário */
   font-size: 0.900rem; /* Certifique-se de que o tamanho da fonte é consistente */
 }
