@@ -236,7 +236,15 @@ export class SalePageComponent {
       return;
     }
 
-    this.loadPercentages(); // Carrega as taxas do local storage
+    // if (!this.customerName || this.customerName.trim() === '') {
+    //   this.toastr.error('Nome do cliente não pode estar vazio', 'Erro');
+    //   return;
+    // }
+
+    // Salvar o nome do cliente no carrinho
+    CartUtil.addCustomerName(this.customerName);
+
+    this.loadPercentages();
 
     let totalWithFee = this.grandTotal;
 
@@ -246,23 +254,20 @@ export class SalePageComponent {
       totalWithFee -= this.grandTotal * (this.creditPercentage / 100);
     }
 
-    // Cria um objeto contendo as informações do cliente e dos itens do carrinho
     const order = {
-      customer: this.user.name,
+      client: this.customerName,  // Nome do cliente adicionado
       sale: {
-        items: this.cartItems.map(item => {
-          return {
-            quantity: item.quantity,
-            price: item.price,
-            purchasePrice: item.purchasePrice,
-            discount: item.discount,
-            title: item.title,
-            product: item._id
-          };
-        }),
+        items: this.cartItems.map(item => ({
+          quantity: item.quantity,
+          price: item.price,
+          purchasePrice: item.purchasePrice,
+          discount: item.discount,
+          title: item.title,
+          product: item._id
+        })),
         formPayment: this.selectedPayment,
         discount: this.generalDiscount,
-        total: totalWithFee // Atualiza o total com a taxa
+        total: totalWithFee
       }
     };
 
@@ -271,7 +276,7 @@ export class SalePageComponent {
       next: (data: any) => {
         this.busy = false;
         this.toastr.success(data.message);
-        CartUtil.clear(); // Limpa o carrinho após a conclusão da compra
+        CartUtil.clear();  // Limpa o carrinho após a conclusão da compra
         this.loadCart();
       },
       error: (err: any) => {
@@ -285,6 +290,7 @@ export class SalePageComponent {
     this.loadCart();
     this.clearTroco();
     this.clearSearch();
+    this.clearCustomerName();
   }
 
 // cria orçamentos
@@ -350,6 +356,10 @@ createBudget() {
   });
 }
 
+
+clearCustomerName() {
+this.customerName = '';
+}
 
   clearPaymentMethod(): void {
     this.selectedPayment = undefined;

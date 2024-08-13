@@ -6,6 +6,7 @@ export class Cart {
   generalDiscount?: number = 0;
   total?: number;
   customerName?: string;
+  client?: string;
 
   constructor() {
     this.items = [];

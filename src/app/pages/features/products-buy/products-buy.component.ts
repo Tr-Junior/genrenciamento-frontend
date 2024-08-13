@@ -7,6 +7,8 @@ import { Table } from 'primeng/table';
 import { Product } from 'src/app/models/product.model';
 import { ProductsBuy } from 'src/app/models/productsBuy-model';
 import { DataService } from 'src/app/services/data.service';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-products-buy',
@@ -196,6 +198,76 @@ export class ProductsBuyComponent implements OnInit {
   clearSearch() {
     this.searchQuery = '';
     this.loadProducts();
+  }
+
+
+  nome = 'Manancial papelaria e utilidades - xerox e impressões';
+  endereco = 'Quadra 10, lote 36, loja 01 Jardim Guaíra I - Águas Lindas de Goiás';
+  telefone = '(61) 99581-0812';
+  cnpj = '52.068.148/0001-61';
+
+  generatePDF(nome: string, endereco: string, telefone: string, cnpj: any): void {
+    const doc = new jsPDF();
+
+    // Informações de endereço, telefone e CNPJ
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+
+    const enderecoText = `Endereço: ${endereco}`;
+    const enderecoWidth = doc.getTextWidth(enderecoText);
+    const enderecoX = (doc.internal.pageSize.getWidth() - enderecoWidth) / 2;
+    doc.text(enderecoText, enderecoX, 20);
+
+    const telefoneText = `Telefone: ${telefone}`;
+    const telefoneWidth = doc.getTextWidth(telefoneText);
+    const telefoneX = (doc.internal.pageSize.getWidth() - telefoneWidth) / 2;
+    doc.text(telefoneText, telefoneX, 25);
+
+    doc.text(`CNPJ: ${cnpj}`, telefoneX, 30);
+
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
+    doc.text(`Data e Hora: ${formattedDate}`, 133, 44);
+
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(0, 0, 0);
+    doc.line(10, 45, doc.internal.pageSize.getWidth() - 10, 45);
+
+    const headers = [['Produto', 'Status']];
+    const tableY = 55;
+
+    const tableData = this.productsBuy.map(product => [
+      product.title,
+      product.status
+    ]);
+
+    autoTable(doc, {
+      startY: tableY,
+      head: headers,
+      body: tableData,
+      styles: {
+        halign: 'center',
+        fontSize: 10,
+        textColor: [0, 0, 0],
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      headStyles: {
+        fillColor: [54, 162, 235],
+        textColor: [255, 255, 255],
+        fontSize: 12,
+        halign: 'center',
+      },
+      columnStyles: {
+        0: { cellWidth: 95 },
+        1: { cellWidth: 95 },
+      }
+    });
+
+    doc.setFontSize(10);
+    doc.text('Agradecemos a preferência!', doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() - 20, { align: 'center' });
+
+    doc.save('produtos.pdf');
   }
 
 }

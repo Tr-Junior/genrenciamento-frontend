@@ -32,3 +32,12 @@
 .buttonTaxa {
   margin-top: 1.7rem; /* Ajuste a margem superior se necessário */
 }
+
+
+
+@media (max-width: 450px) {
+
+  .buttonTaxa {
+    margin-top: 2.9rem; /* Ajuste a margem superior se necessário */
+  }
+  }

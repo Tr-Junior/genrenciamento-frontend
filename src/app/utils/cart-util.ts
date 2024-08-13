@@ -66,6 +66,11 @@ export class CartUtil {
     cart.generalDiscount = generalDiscount;
     this.update(cart);
   }
+  public static addCustomerName(customerName: string): void {
+    let cart = this.get();
+    cart.customerName = customerName;
+    this.update(cart);
+  }
 
   public static clear() {
     sessionStorage.removeItem(this.getUserKey());
