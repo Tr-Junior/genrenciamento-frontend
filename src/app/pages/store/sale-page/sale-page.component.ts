@@ -140,6 +140,7 @@ export class SalePageComponent {
     this.toastr.success(data.message, 'Produto adicionado');
     CartUtil.add(item._id, item.title, item.quantity, item.price, item.discount, item.purchasePrice);
     this.loadCart();
+    this.clearSearch();
   }
 
 
