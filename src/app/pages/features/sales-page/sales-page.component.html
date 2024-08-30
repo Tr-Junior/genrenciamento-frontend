@@ -1,12 +1,12 @@
 <div class="card">
   <div class="grid grid-cols-2 gap-0">
-    <!-- Mostrar os totais por forma de pagamento e o lucro estimado total -->
     <div *ngFor="let paymentTotal of paymentTotals" class="font-bold text-gray-900 m-2 px-4 py-2 border-rounded"
       [ngClass]="paymentTotal.className">
       {{ paymentTotal.paymentMethod }}: {{ paymentTotal.total | currency }}
     </div>
   </div>
 </div>
+
 
 <div class="card">
   <div class="flex flex-col md:flex-row md:items-center md:justify-end m-2">
@@ -17,8 +17,8 @@
       <button class="ml-3" pButton type="button" label="Pesquisar" icon="pi pi-search" (click)="listOrders()"></button>
       <button class="ml-3 mt-3" pButton type="button" label="Limpar" icon="pi pi-times"
         (click)="clearSearch()"></button>
-      <button class="ml-3 mt-3" pButton type="button" label="Gerar relatório" icon="pi pi-file-pdf"
-        (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></button>
+      <!-- <button class="ml-3 mt-3" pButton type="button" label="Gerar relatório" icon="pi pi-file-pdf"
+        (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></button> -->
     </span>
   </div>
 
@@ -48,90 +48,96 @@
 
   <app-loading style="text-align: center" *ngIf="busy"></app-loading>
   <p-table [value]="orders" dataKey="number" [paginator]="true" [rows]="100" [showCurrentPageReport]="true"
-    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Vendas"
-    [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" styleClass="p-datatable-striped" [pSelectableRow]="true"
-    toggleable="false">
-    <ng-template pTemplate="header">
-      <tr pTableToggler>
-        <th></th>
-        <th pSortableColumn="number">
-          Venda <p-sortIcon field="number"></p-sortIcon>
-        </th>
-        <th pSortableColumn="createDate">
-          Data <p-sortIcon field="createDate"></p-sortIcon>
-        </th>
-        <th pSortableColumn="customer">Vendedor<p-sortIcon field="customer"></p-sortIcon></th>
-        <th pSortableColumn="client">Cliente<p-sortIcon field="client"></p-sortIcon></th>
-        <th pSortableColumn="formPayment">Pagamento<p-sortIcon field="formPayment"></p-sortIcon></th>
-        <th pSortableColumn="total">
-          Total <p-sortIcon field="total"></p-sortIcon>
-        </th>
-        <th>Ação</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-order let-expanded="expanded" let-ri="rowIndex">
-      <tr>
-        <td>
-          <button type="button" pButton pRipple [pRowToggler]="order"
-            class="p-button-text p-button-rounded p-button-plain"
-            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-        </td>
-        <td>{{ri+1}}</td>
-        <td>{{ order.createDate | date: 'dd/MM/yyyy HH:mm'}}</td>
-        <td>{{ order.customer.name }}</td>
-        <td>{{ order.client}}</td>
-        <td>{{ order.sale.formPayment }}</td>
-        <td>{{ order.sale.total | currency }}</td>
-        <td>
-          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined"
-            pTooltip="Remover venda" tooltipPosition="top" [swal]="{
-                  title: 'Atenção',
-                  background: '#737373',
-                  width: 300,
-                  color: '#fff',
-                  text: 'Deseja realmente excluir a Venda: ' + order.number + '?',
-                  showDenyButton: true,
-                  denyButtonText: 'Não',
-                  confirmButtonText: 'Sim',
-                  icon: 'warning'
-                  }" (confirm)="delete(order._id, order.number)"></p-button>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="rowexpansion" let-order>
-      <td colspan="7">
-        <div class="p-3">
-          <p-table [value]="order.sale.items" dataKey="product">
-            <ng-template pTemplate="header">
-              <tr>
-                <th pSortableColumn="title">
-                  Produto
-                </th>
-                <th pSortableColumn="date">
-                  Quantidade
-                </th>
-                <th>Valor Unitário</th>
-                <th>Valor Total</th>
-                <th>Lucro estimado</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-items>
-              <tr>
-                <td>{{ items.title }}</td>
-                <td>{{ items.quantity }}</td>
-                <td>{{ items.price | currency}}</td>
-                <td>{{ items.price * items.quantity | currency}}</td>
-                <td>{{ ((items.price * items.quantity)-(items.purchasePrice * items.quantity))| currency}}</td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-              <tr>
-                <td colspan="6">Não há vendas...</td>
-              </tr>
-            </ng-template>
-          </p-table>
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Vendas"
+  [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" styleClass="p-datatable-striped" [pSelectableRow]="true"
+  toggleable="false">
+  <ng-template pTemplate="header">
+    <tr pTableToggler>
+      <th></th>
+      <th pSortableColumn="number">
+        Venda <p-sortIcon field="number"></p-sortIcon>
+      </th>
+      <th pSortableColumn="createDate">
+        Data <p-sortIcon field="createDate"></p-sortIcon>
+      </th>
+      <th pSortableColumn="customer.name">Vendedor<p-sortIcon field="customer.name"></p-sortIcon></th>
+      <th pSortableColumn="client">Cliente<p-sortIcon field="client"></p-sortIcon></th>
+      <th pSortableColumn="sale.payments">Pagamento<p-sortIcon field="sale.payments"></p-sortIcon></th>
+      <th pSortableColumn="sale.total">
+        Total <p-sortIcon field="sale.total"></p-sortIcon>
+      </th>
+      <th>Ação</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-order let-expanded="expanded" let-ri="rowIndex">
+    <tr>
+      <td>
+        <button type="button" pButton pRipple [pRowToggler]="order"
+          class="p-button-text p-button-rounded p-button-plain"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+      </td>
+      <td>{{ri+1}}</td>
+      <td>{{ order.createDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+      <td>{{ order.customer.name }}</td>
+      <td>{{ order.client }}</td>
+      <td>
+        <div *ngFor="let payment of order.sale.payments">
+          {{ payment.method }}: {{ payment.amount | currency }}
         </div>
       </td>
-    </ng-template>
-  </p-table>
+      <td>{{ order.sale.total | currency }}</td>
+      <td>
+        <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined"
+          pTooltip="Remover venda" tooltipPosition="top" [swal]="{
+                title: 'Atenção',
+                background: '#737373',
+                width: 300,
+                color: '#fff',
+                text: 'Deseja realmente excluir a Venda: ' + order.number + '?',
+                showDenyButton: true,
+                denyButtonText: 'Não',
+                confirmButtonText: 'Sim',
+                icon: 'warning'
+                }" (confirm)="delete(order._id, order.number)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-order>
+    <td colspan="7">
+      <div class="p-3">
+        <p-table [value]="order.sale.items" dataKey="product">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="title">
+                Produto
+              </th>
+              <th pSortableColumn="quantity">
+                Quantidade
+              </th>
+              <th>Valor Unitário</th>
+              <th>Valor Total</th>
+              <th>Lucro estimado</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-items>
+            <tr>
+              <td>{{ items.title }}</td>
+              <td>{{ items.quantity }}</td>
+              <td>{{ items.price | currency }}</td>
+              <td>{{ items.price * items.quantity | currency }}</td>
+              <td>{{ ((items.price * items.quantity)-(items.purchasePrice * items.quantity)) | currency }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6">Não há vendas...</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </td>
+  </ng-template>
+</p-table>
+
+
   <!-- Adiciona o botão para gerar o PDF -->
