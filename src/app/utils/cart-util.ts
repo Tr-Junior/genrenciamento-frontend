@@ -114,15 +114,4 @@ export class CartUtil {
   private static update(cart: Cart) {
     sessionStorage.setItem(this.getUserKey(), JSON.stringify(cart));
   }
-
-  static getQuotes(): Cart[] {
-    const quotes = sessionStorage.getItem('quotes');
-    return quotes ? JSON.parse(quotes) : [];
-  }
-
-  static saveQuote(quote: Cart): void {
-    const quotes = this.getQuotes();
-    quotes.push(quote);
-    sessionStorage.setItem('quotes', JSON.stringify(quotes));
-  }
 }
