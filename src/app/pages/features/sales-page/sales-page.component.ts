@@ -111,8 +111,8 @@ export class SalesPageComponent implements OnInit {
 
   calculatePaymentTotals() {
     const paymentTotalsMap = new Map<string, number>();
-    let totalSales = 0; // Variável para armazenar a soma total de todas as vendas
-    let estimatedProfitTotal = 0; // Variável para armazenar a soma total do lucro estimado
+    let totalSales = 0;
+    let estimatedProfitTotal = 0;
 
     const paymentClasses: { [key: string]: string } = {
       'Crédito': 'payment-credit',
@@ -123,38 +123,36 @@ export class SalesPageComponent implements OnInit {
     };
 
     this.orders.forEach(order => {
-      const paymentMethod = order.sale.formPayment;
-      const total = order.sale.total;
+      order.sale.payments.forEach(payment => {
+        const paymentMethod = payment.method;
+        const amount = payment.amount;
 
-      totalSales += total; // Adiciona o total da venda à soma total de todas as vendas
+        if (paymentTotalsMap.has(paymentMethod)) {
+          paymentTotalsMap.set(paymentMethod, paymentTotalsMap.get(paymentMethod)! + amount);
+        } else {
+          paymentTotalsMap.set(paymentMethod, amount);
+        }
+      });
 
-      // Calcula o lucro estimado para cada item da venda
+      totalSales += order.sale.total;
+
       order.sale.items.forEach(item => {
         const itemProfit = (item.price * item.quantity) - (item.purchasePrice * item.quantity);
         estimatedProfitTotal += itemProfit;
       });
-
-      if (paymentTotalsMap.has(paymentMethod)) {
-        paymentTotalsMap.set(paymentMethod, paymentTotalsMap.get(paymentMethod)! + total);
-      } else {
-        paymentTotalsMap.set(paymentMethod, total);
-      }
     });
 
-    // Inicializa paymentTotals como um array vazio
     this.paymentTotals = [];
 
-    // Adiciona os totais individuais por forma de pagamento
     Array.from(paymentTotalsMap).forEach(([paymentMethod, total]) => {
       this.paymentTotals.push({ paymentMethod, total, className: paymentClasses[paymentMethod] || 'payment-others' });
     });
 
-    // Adiciona a soma total de todas as vendas com a classe 'total'
     this.paymentTotals.push({ paymentMethod: 'Total', total: totalSales, className: paymentClasses['Total'] });
-
-    // Adiciona o lucro estimado total com a classe 'total'
     this.paymentTotals.push({ paymentMethod: 'Lucro Estimado Total', total: estimatedProfitTotal, className: 'total' });
   }
+
+
 
 
 
@@ -216,116 +214,13 @@ export class SalesPageComponent implements OnInit {
     });
 
     doc.text(paymentTotalTextLine1, doc.internal.pageSize.getWidth() / 2, y, { align: 'center' });
-    y += 6;
+    y += 10;
     doc.text(paymentTotalTextLine2, doc.internal.pageSize.getWidth() / 2, y, { align: 'center' });
-    y += 6;
-
-    // Linha de separação antes das vendas
-    doc.setLineWidth(0.5);
-    doc.setDrawColor(0, 0, 0);
-    doc.line(10, y, doc.internal.pageSize.getWidth() - 10, y);
-    y += 2;
-
-    // Adiciona a tabela de vendas e itens juntos
-    this.orders.forEach(order => {
-        if (y > doc.internal.pageSize.height - 50) {
-            doc.addPage();
-            y = 10;
-        }
-
-        const saleDetailsHeaders = ['Número da Venda', 'Data da Venda', 'Forma de Pagamento', 'Valor Total'];
-        const saleDetailsData = [
-            [
-                order.number,
-                new Date(order.createDate).toLocaleString(), // Converte a data para string
-                order.sale.formPayment,
-                `R$ ${order.sale.total.toFixed(2)}`
-            ]
-        ];
-
-        autoTable(doc, {
-            startY: y,
-            head: [saleDetailsHeaders],
-            body: saleDetailsData,
-            styles: {
-                halign: 'center',
-                fontSize: 10,
-                textColor: [0, 0, 0],
-                lineColor: [0, 0, 0],
-                lineWidth: 0.1,
-                fillColor: [255, 255, 255] // Branco (transparente)
-            },
-            headStyles: {
-                fillColor: [255, 255, 255], // Branco (transparente)
-                textColor: [0, 0, 0],
-                fontSize: 12,
-                halign: 'center'
-            },
-            columnStyles: {
-                0: { cellWidth: 50 },
-                1: { cellWidth: 50 },
-                2: { cellWidth: 50 },
-                3: { cellWidth: 40 }
-            },
-            tableWidth: 'wrap', // Ajusta a largura da tabela para o conteúdo
-            margin: { left: (doc.internal.pageSize.getWidth() - 190) / 2 }, // Centraliza a tabela
-            didDrawPage: function (data) {
-                y = data.cursor?.y || y;
-            }
-        });
-
-        y += 1; // Diminui o espaçamento entre tabelas
-
-        const itemHeaders = ['Produto', 'Quantidade', 'Valor Unitário', 'Valor Total', 'Lucro Estimado'];
-        const itemData = order.sale.items.map(item => {
-            const estimatedProfit = (item.price - item.purchasePrice) * item.quantity;
-            return [
-                item.title,
-                item.quantity.toString(),
-                `R$ ${item.price.toFixed(2)}`,
-                `R$ ${(item.price * item.quantity).toFixed(2)}`,
-                `R$ ${estimatedProfit.toFixed(2)}`
-            ];
-        });
-
-        autoTable(doc, {
-            startY: y,
-            head: [itemHeaders],
-            body: itemData,
-            styles: {
-                halign: 'center',
-                fontSize: 10,
-                textColor: [0, 0, 0],
-                lineColor: [0, 0, 0],
-                lineWidth: 0.1,
-                fillColor: [255, 255, 255] // Branco (transparente)
-            },
-            headStyles: {
-                fillColor: [255, 255, 255], // Branco (transparente)
-                textColor: [0, 0, 0],
-                fontSize: 12,
-                halign: 'center'
-            },
-            columnStyles: {
-                0: { cellWidth: 45 },
-                1: { cellWidth: 30 },
-                2: { cellWidth: 35 },
-                3: { cellWidth: 35 },
-                4: { cellWidth: 40 }
-            },
-            tableWidth: 'wrap', // Ajusta a largura da tabela para o conteúdo
-            margin: { left: (doc.internal.pageSize.getWidth() - 185) / 2 }, // Centraliza a tabela
-            didDrawPage: function (data) {
-                y = data.cursor?.y || y;
-            }
-        });
-
-        y += (itemData.length * 8) + 2; // Diminui o espaçamento entre tabelas
-    });
 
     // Salva o PDF
     doc.save('relatorio_vendas.pdf');
-}
+  }
+
 
 
 }
