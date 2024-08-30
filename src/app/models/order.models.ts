@@ -7,20 +7,26 @@ export interface SaleItem {
   purchasePrice: number,
   _id: string;
 }
+export interface PaymentMethod {
+  method: string;
+  amount: number;
+}
+
+export interface Sale {
+  items: SaleItem[];
+  discount: number;
+  total: number;
+  payments: PaymentMethod[]; // Atualizado para "payments" em vez de "formPayment"
+}
+
 export interface Order {
-  sale: {
-    items: SaleItem[];
-    discount: number;
-    total: number;
-    formPayment: string;
+  sale: Sale;
+  customer: {
+    _id: string;
+    name: string;
   };
-  customer: string;
   number: string;
   createDate: Date;
   client: string;
-}
-export interface PaymentTotal {
-  formPayment: string;
-  color: any;
-  total: number;
+  _id: string; // Inclua o ID aqui se necessário
 }
