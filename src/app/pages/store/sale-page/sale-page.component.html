@@ -95,20 +95,27 @@
     <div class="p-fluid p-formgrid grid p-0">
       <!-- Primeira linha: Forma de Pagamento e Desconto -->
       <div class="col-12 md:col-2">
-        <span class="text-base truncate" pTooltip="Forma de Pagamento" tooltipPosition="top">Forma de Pagamento</span>
+        <span class="text-base truncate">Forma de Pagamento</span>
         <div class="mt-2">
+        <p-dropdown
+        styleClass="ng-dirty ng-invalid w-full"
+        placeholder="Selecione" optionLabel="label" optionValue="value" [options]="formPaymentOptions" [(ngModel)]="selectedPayment" (onChange)="onFormPaymentSelected($event.value)">
+        </p-dropdown>
+      </div>
+
+      <!-- Renderizar campos adicionais quando 'Outros' for selecionado -->
+      <div *ngIf="selectedPayment === 'Outros'" class="col-12">
+        <div *ngFor="let payment of paymentMethods; let i = index" class="p-field">
           <p-dropdown
-            styleClass="ng-dirty ng-invalid w-full"
-            placeholder="Selecione"
             [options]="formPaymentOptions"
-            [(ngModel)]="selectedPayment"
-            optionLabel="label"
-            optionValue="value"
-            (onChange)="onFormPaymentSelected($event.value)">
+            [(ngModel)]="payment.method"
+            placeholder="Método de Pagamento">
           </p-dropdown>
+          <p-inputNumber [(ngModel)]="payment.amount" placeholder="Valor" currency="BRL" mode="currency"></p-inputNumber>
         </div>
       </div>
 
+      </div>
       <div class="col-12 md:col-2">
         <span class="text-base truncate" pTooltip="Desconto" tooltipPosition="top">Desconto</span>
         <p-inputNumber class="mt-2 desconto"
