@@ -46,6 +46,7 @@ export class SalePageComponent {
   public customerNames: string[] = [];
   creditPercentage: number = 0;
   debitPercentage: number = 0;
+  public paymentMethods: { method: string, amount: number }[] = [];
 
   constructor(
     private toastr: ToastrService,
@@ -215,8 +216,9 @@ export class SalePageComponent {
   }
 
   getPaymentMethods(): string[] {
-    return ['Crédito', 'Débito', 'Dinheiro', 'Pix'];
+    return ['Crédito', 'Débito', 'Dinheiro', 'Pix', 'Outros'];
   }
+
 
   loadPercentages() {
     const credit = localStorage.getItem('creditPercentage');
@@ -232,8 +234,8 @@ export class SalePageComponent {
 
 
   submitOrder() {
-    if (!this.selectedPayment) {
-      this.toastr.error('Selecione a forma de pagamento', 'Erro');
+    if (this.paymentMethods.length === 0 || this.paymentMethods.some(p => !p.method || !p.amount)) {
+      this.toastr.error('Preencha corretamente os métodos e valores de pagamento', 'Erro');
       return;
     }
 
@@ -256,7 +258,7 @@ export class SalePageComponent {
     }
 
     const order = {
-      client: this.customerName,  // Nome do cliente adicionado
+      client: this.customerName,
       sale: {
         items: this.cartItems.map(item => ({
           quantity: item.quantity,
@@ -266,9 +268,9 @@ export class SalePageComponent {
           title: item.title,
           product: item._id
         })),
-        formPayment: this.selectedPayment,
         discount: this.generalDiscount,
-        total: totalWithFee
+        total: this.grandTotal,
+        payments: this.paymentMethods // Novo formato para envio dos pagamentos
       }
     };
 
@@ -410,11 +412,18 @@ this.customerName = '';
   }
 
 
-  onFormPaymentSelected(formPayment: string): void {
-    this.selectedPayment = formPayment;
-    CartUtil.addPaymentForm(formPayment);
-  }
+  // onFormPaymentSelected(formPayment: string): void {
+  //   this.selectedPayment = formPayment;
+  //   CartUtil.addPaymentForm(formPayment);
+  // }
 
+  onFormPaymentSelected(paymentMethod: string) {
+    if (paymentMethod === 'Outros') {
+      this.paymentMethods = [{ method: '', amount: 0 }, { method: '', amount: 0 }];
+    } else {
+      this.paymentMethods = [{ method: paymentMethod, amount: this.grandTotal }];
+    }
+  }
 
   calcTroco() {
     if (this.total > 0) {
