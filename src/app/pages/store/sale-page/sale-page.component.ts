@@ -283,10 +283,16 @@ export class SalePageComponent {
         this.loadCart();
       },
       error: (err: any) => {
-        console.log(err);
         this.busy = false;
-        this.toastr.error(err.message);
-      }
+        if (err.error && err.error.message) {
+            // Exibe a mensagem de erro recebida do backend
+            this.toastr.error(err.error.message, 'Erro');
+        } else {
+            // Se o erro não tem mensagem, exibe uma mensagem genérica
+            this.toastr.error('Falha ao processar a requisição', 'Erro');
+        }
+        console.log('Erro detalhado:', err);
+    }
     });
 
     this.clearPaymentMethod();
