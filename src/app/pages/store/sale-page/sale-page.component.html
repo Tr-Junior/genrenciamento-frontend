@@ -104,16 +104,6 @@
       </div>
 
       <!-- Renderizar campos adicionais quando 'Outros' for selecionado -->
-      <div *ngIf="selectedPayment === 'Outros'" class="col-12">
-        <div *ngFor="let payment of paymentMethods; let i = index" class="p-field">
-          <p-dropdown
-            [options]="formPaymentOptions"
-            [(ngModel)]="payment.method"
-            placeholder="Método de Pagamento">
-          </p-dropdown>
-          <p-inputNumber [(ngModel)]="payment.amount" placeholder="Valor" currency="BRL" mode="currency"></p-inputNumber>
-        </div>
-      </div>
 
       </div>
       <div class="col-12 md:col-2">
@@ -142,7 +132,17 @@
           </p-inputNumber>
         </div>
       </div>
-
+<div *ngIf="selectedPayment === 'Outros'" class="col-12 md:col-2 mr-6">
+        <div *ngFor="let payment of paymentMethods; let i = index" class="p-field">
+          <p-dropdown class="mt-2"
+            [options]="formPaymentOptions"
+            [(ngModel)]="payment.method"
+            placeholder="Método de Pagamento">
+          </p-dropdown>
+          <p-inputNumber  [(ngModel)]="payment.amount" placeholder="Valor" currency="BRL" mode="currency"></p-inputNumber>
+        </div>
+      </div>
+<div *ngIf="selectedPayment === 'Outros'" class="md:col-8 mr-6"></div>
       <!-- Terceira linha: Valor Recebido e Valor do Troco -->
       <div class=" col-12 md:col-2">
         <span class="text-base">Valor Recebido:</span>
