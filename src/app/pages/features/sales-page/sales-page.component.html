@@ -22,73 +22,49 @@
     </span>
   </div>
 
-  <div class="card mb-3">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-end">
-      <div class=" mr-3">
-        <span for="creditPercentage">Porcentagem de Crédito:</span>
-        <div class="p-inputgroup mt-2">
-          <span class="p-inputgroup-addon">%</span>
-          <input id="creditPercentage" type="number" [(ngModel)]="creditPercentage" class="p-inputtext p-component" />
-        </div>
-      </div>
-      <div class="mr-3">
-        <span class="text-base" for="debitPercentage">Porcentagem de Débito:</span>
-        <div class="p-inputgroup mt-2">
-          <span class="p-inputgroup-addon">%</span>
-          <input id="debitPercentage" type="number" [(ngModel)]="debitPercentage" class="p-inputtext p-component" />
-        </div>
-      </div>
-      <div class="">
-        <button class="buttonTaxa" pButton type="button" label="Salvar Taxas" icon="pi pi-save"
-          (click)="savePercentages()"></button>
-      </div>
-    </div>
-  </div>
-
-
   <app-loading style="text-align: center" *ngIf="busy"></app-loading>
   <p-table [value]="orders" dataKey="number" [paginator]="true" [rows]="100" [showCurrentPageReport]="true"
-  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Vendas"
-  [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" styleClass="p-datatable-striped" [pSelectableRow]="true"
-  toggleable="false">
-  <ng-template pTemplate="header">
-    <tr pTableToggler>
-      <th></th>
-      <th pSortableColumn="number">
-        Venda <p-sortIcon field="number"></p-sortIcon>
-      </th>
-      <th pSortableColumn="createDate">
-        Data <p-sortIcon field="createDate"></p-sortIcon>
-      </th>
-      <th pSortableColumn="customer.name">Vendedor<p-sortIcon field="customer.name"></p-sortIcon></th>
-      <th pSortableColumn="client">Cliente<p-sortIcon field="client"></p-sortIcon></th>
-      <th pSortableColumn="sale.payments">Pagamento<p-sortIcon field="sale.payments"></p-sortIcon></th>
-      <th pSortableColumn="sale.total">
-        Total <p-sortIcon field="sale.total"></p-sortIcon>
-      </th>
-      <th>Ação</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-order let-expanded="expanded" let-ri="rowIndex">
-    <tr>
-      <td>
-        <button type="button" pButton pRipple [pRowToggler]="order"
-          class="p-button-text p-button-rounded p-button-plain"
-          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-      </td>
-      <td>{{ri+1}}</td>
-      <td>{{ order.createDate | date: 'dd/MM/yyyy HH:mm'}}</td>
-      <td>{{ order.customer.name }}</td>
-      <td>{{ order.client }}</td>
-      <td>
-        <div *ngFor="let payment of order.sale.payments">
-          {{ payment.method }}: {{ payment.amount | currency }}
-        </div>
-      </td>
-      <td>{{ order.sale.total | currency }}</td>
-      <td>
-        <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined"
-          pTooltip="Remover venda" tooltipPosition="top" [swal]="{
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Vendas"
+    [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" styleClass="p-datatable-striped" [pSelectableRow]="true"
+    toggleable="false">
+    <ng-template pTemplate="header">
+      <tr pTableToggler>
+        <th></th>
+        <th pSortableColumn="number">
+          Venda <p-sortIcon field="number"></p-sortIcon>
+        </th>
+        <th pSortableColumn="createDate">
+          Data <p-sortIcon field="createDate"></p-sortIcon>
+        </th>
+        <th pSortableColumn="customer.name">Vendedor<p-sortIcon field="customer.name"></p-sortIcon></th>
+        <th pSortableColumn="client">Cliente<p-sortIcon field="client"></p-sortIcon></th>
+        <th pSortableColumn="sale.payments">Pagamento<p-sortIcon field="sale.payments"></p-sortIcon></th>
+        <th pSortableColumn="sale.total">
+          Total <p-sortIcon field="sale.total"></p-sortIcon>
+        </th>
+        <th>Ação</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order let-expanded="expanded" let-ri="rowIndex">
+      <tr>
+        <td>
+          <button type="button" pButton pRipple [pRowToggler]="order"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+        </td>
+        <td>{{ri+1}}</td>
+        <td>{{ order.createDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+        <td>{{ order.customer.name }}</td>
+        <td>{{ order.client }}</td>
+        <td>
+          <div *ngFor="let payment of order.sale.payments">
+            {{ payment.method }}: {{ payment.amount | currency }}
+          </div>
+        </td>
+        <td>{{ order.sale.total | currency }}</td>
+        <td>
+          <div pTooltip="Remover venda" tooltipPosition="top"> <p-button icon="pi pi-trash"
+              styleClass="p-button-rounded p-button-danger p-button-outlined" [swal]="{
                 title: 'Atenção',
                 background: '#737373',
                 width: 300,
@@ -98,46 +74,47 @@
                 denyButtonText: 'Não',
                 confirmButtonText: 'Sim',
                 icon: 'warning'
-                }" (confirm)="delete(order._id, order.number)"></p-button>
+                }" (confirm)="delete(order._id, order.number)"></p-button></div>
+
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-order>
+      <td colspan="7">
+        <div class="p-3">
+          <p-table [value]="order.sale.items" dataKey="product">
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="title">
+                  Produto
+                </th>
+                <th pSortableColumn="quantity">
+                  Quantidade
+                </th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+                <th>Lucro estimado</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-items>
+              <tr>
+                <td>{{ items.title }}</td>
+                <td>{{ items.quantity }}</td>
+                <td>{{ items.price | currency }}</td>
+                <td>{{ items.price * items.quantity | currency }}</td>
+                <td>{{ ((items.price * items.quantity)-(items.purchasePrice * items.quantity)) | currency }}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="6">Não há vendas...</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
       </td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="rowexpansion" let-order>
-    <td colspan="7">
-      <div class="p-3">
-        <p-table [value]="order.sale.items" dataKey="product">
-          <ng-template pTemplate="header">
-            <tr>
-              <th pSortableColumn="title">
-                Produto
-              </th>
-              <th pSortableColumn="quantity">
-                Quantidade
-              </th>
-              <th>Valor Unitário</th>
-              <th>Valor Total</th>
-              <th>Lucro estimado</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-items>
-            <tr>
-              <td>{{ items.title }}</td>
-              <td>{{ items.quantity }}</td>
-              <td>{{ items.price | currency }}</td>
-              <td>{{ items.price * items.quantity | currency }}</td>
-              <td>{{ ((items.price * items.quantity)-(items.purchasePrice * items.quantity)) | currency }}</td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="6">Não há vendas...</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-    </td>
-  </ng-template>
-</p-table>
+    </ng-template>
+  </p-table>
 
 
   <!-- Adiciona o botão para gerar o PDF -->
