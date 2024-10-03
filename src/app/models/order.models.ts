@@ -17,6 +17,7 @@ export interface Order {
   customer: string;
   number: string;
   createDate: Date;
+  client: string;
 }
 export interface PaymentTotal {
   formPayment: string;

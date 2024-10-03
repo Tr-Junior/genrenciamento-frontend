@@ -129,6 +129,7 @@ export class SalePageComponent {
     this.toastr.success(data.message, 'Produto adicionado');
     CartUtil.add(item._id, item.title, item.quantity, item.price, item.discount, item.purchasePrice);
     this.loadCart();
+    this.clearSearch();
   }
 
 
@@ -211,8 +212,12 @@ export class SalePageComponent {
       this.toastr.error('Selecione a forma de pagamento', 'Erro');
       return;
     }
+
+    CartUtil.addCustomerName(this.customerName);
+
     // Cria um objeto contendo as informações do cliente e dos itens do carrinho
     const order = {
+      client: this.customerName,
       customer: this.user.name,
       sale: {
         items: this.cartItems.map(item => {
@@ -249,6 +254,7 @@ export class SalePageComponent {
     this.loadCart();
     this.clearTroco();
     this.clearSearch();
+    this.clearCustomerName();
   }
 
 // cria orçamentos
@@ -314,6 +320,9 @@ createBudget() {
   });
 }
 
+clearCustomerName() {
+  this.customerName = '';
+  }
 
   clearPaymentMethod(): void {
     this.selectedPayment = undefined;

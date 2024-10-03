@@ -11,16 +11,19 @@
 <div class="card">
   <div class="flex flex-col md:flex-row md:items-center md:justify-end m-2">
     <span class="p-input-icon-left">
-      <p-calendar [(ngModel)]="rangeDates" pTooltip="Selecione a data inicial e a data final" tooltipPosition="top"  selectionMode="range" [showIcon]="true" [locale]="ptBR" dateFormat="dd/mm/yy"
-        [readonlyInput]="true" styleClass="customCalendarClass"></p-calendar>
-      <button class="ml-3" pButton type="button"  label="Pesquisar" icon="pi pi-search" (click)="listOrders()"></button>
-      <button class="ml-3 mt-3" pButton type="button" label="Limpar" icon="pi pi-times" (click)="clearSearch()"></button>
-      <button class="ml-3 mt-3" pButton type="button" label="Gerar relatório" icon="pi pi-file-pdf" (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></button>
+      <p-calendar [(ngModel)]="rangeDates" pTooltip="Selecione a data inicial e a data final" tooltipPosition="top"
+        selectionMode="range" [showIcon]="true" [locale]="ptBR" dateFormat="dd/mm/yy" [readonlyInput]="true"
+        styleClass="customCalendarClass"></p-calendar>
+      <button class="ml-3" pButton type="button" label="Pesquisar" icon="pi pi-search" (click)="listOrders()"></button>
+      <button class="ml-3 mt-3" pButton type="button" label="Limpar" icon="pi pi-times"
+        (click)="clearSearch()"></button>
+      <button class="ml-3 mt-3" pButton type="button" label="Gerar relatório" icon="pi pi-file-pdf"
+        (click)="generatePDF(logo, nome, endereco, telefone, cnpj)"></button>
     </span>
   </div>
 
   <app-loading style="text-align: center" *ngIf="busy"></app-loading>
- <p-table [value]="orders" dataKey="number" [paginator]="true" [rows]="100" [showCurrentPageReport]="true"
+  <p-table [value]="orders" dataKey="number" [paginator]="true" [rows]="100" [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Vendas"
     [rowsPerPageOptions]="[100, 150, 200, 250, 350, 500]" styleClass="p-datatable-striped" [pSelectableRow]="true"
     toggleable="false">
@@ -31,11 +34,12 @@
           Venda <p-sortIcon field="number"></p-sortIcon>
         </th>
         <th pSortableColumn="createDate">
-          Data  <p-sortIcon field="createDate"></p-sortIcon>
+          Data <p-sortIcon field="createDate"></p-sortIcon>
         </th>
         <th pSortableColumn="customer">Vendedor<p-sortIcon field="customer"></p-sortIcon></th>
+        <th pSortableColumn="client">Cliente<p-sortIcon field="client"></p-sortIcon></th>
         <th pSortableColumn="formPayment">
-          Pagamento <p-sortIcon field="formPayment"></p-sortIcon>
+          Forma de pagamento <p-sortIcon field="formPayment"></p-sortIcon>
         </th>
         <th pSortableColumn="total">
           Total <p-sortIcon field="total"></p-sortIcon>
@@ -53,11 +57,12 @@
         <td>{{ri+1}}</td>
         <td>{{ order.createDate | date: 'dd/MM/yyyy HH:mm'}}</td>
         <td>{{ order.customer.name }}</td>
+        <td>{{ order.client }}</td>
         <td>{{ order.sale.formPayment }}</td>
         <td>{{ order.sale.total | currency }}</td>
         <td>
-          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined" pTooltip="Remover venda"
-          tooltipPosition="top" [swal]="{
+          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined"
+            pTooltip="Remover venda" tooltipPosition="top" [swal]="{
                   title: 'Atenção',
                   background: '#737373',
                   width: 300,
@@ -71,7 +76,7 @@
         </td>
       </tr>
     </ng-template>
-    <ng-template pTemplate="rowexpansion" let-order >
+    <ng-template pTemplate="rowexpansion" let-order>
       <td colspan="7">
         <div class="p-3">
           <p-table [value]="order.sale.items" dataKey="product">
@@ -107,7 +112,4 @@
       </td>
     </ng-template>
   </p-table>
-<!-- Adiciona o botão para gerar o PDF -->
-
-
-
+  <!-- Adiciona o botão para gerar o PDF -->
